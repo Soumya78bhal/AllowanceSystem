@@ -4,38 +4,37 @@ const dotenv=require('dotenv').config()
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const mongoose=require('mongoose')
 const Employee=require('./Models/Employee')
+const bodyParser=require('body-parser');
 
 const uri=process.env.uri;
 
-///Testing connection
 
-// async function connection(){
-//     try{
-//         await client.connect();
-//         await client.db("admin").command({ping:1});
-//         console.log("successful");
-//     }catch(err){
-//         console.log(err);
-//     }
-//     finally{
-//         await client.close();
-//     }
-// }
-// connection();
+var Parser=bodyParser.json();
 
-mongoose.connect(uri);
-
-
-const data=new Employee({
-    name:"hariany",
-    password:"1234567"
-})
-async function savedata(){ 
-    await data.save();
+try{
+    mongoose.connect(uri);
+}catch(e){
+    console.log(e);
 }
-//savedata();
-const client=new MongoClient(uri);
 
+
+app.post('/signup',Parser,async (req,res)=>{
+    const {name,password}=req.body;
+
+    try{
+        const check=await Employee.findOne({name:name});
+        if(check){
+            res.send("Name already exist")
+        }
+        else{
+            const data=await new Employee(req.body);
+            await data.save();
+            res.send("Saved");
+        }
+    }catch(e){
+        res.send("error")
+    }
+})
 
 const PORT=process.env.PORT || 5000
 app.listen(PORT,()=>{
