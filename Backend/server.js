@@ -57,7 +57,7 @@ app.post('/signup',Parser,async (req,res)=>{
         else{
             const data=await new Employee({
                 ...req.body,
-                password:await hashPassword(req.body.password)
+                password:await hashPassword(password)
             });
             await data.save();
             res.send("Saved");
