@@ -26,10 +26,6 @@ const applicationSchema = new mongoose.Schema({
     bill: {
         type: String, // URL or path to the uploaded bill PDF/DOC
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
     }
 });
 
