@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Employee = require('./Employee')
 
 const applicationSchema = new mongoose.Schema({
     employee: {
