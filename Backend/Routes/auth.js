@@ -2,9 +2,12 @@ const express=require("express");
 const bcrypt=require('bcrypt')
 const router=express.Router();
 const Employee=require('../Models/Employee')
+const bodyParser=require('body-parser');
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }))
 
-router.post('/login', async (req, res) => {
+router.post('/login' ,async (req, res) => {
     const { name, password } = req.body;
 
     try {
@@ -23,15 +26,18 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register',async (req, res) => {
     const { name, password } = req.body;
-
+    console.log(req.body);
     try {
         const existingUser = await Employee.findOne({ name: name });
         if (existingUser) {
             return res.status(409).send({ message: "Name already exists" });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10,(err,hash)=>{
+            return hash;
+        });
+        
         const newUser = new Employee({
             ...req.body,
             password: hashedPassword
