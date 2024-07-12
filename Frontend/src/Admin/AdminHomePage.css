@@ -1,0 +1,26 @@
+.Adminpic {
+    width: 100%;
+    height: auto;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row; /* This is actually the default, so it's optional */
+    justify-content: space-between;
+    align-items: center; /* Align items vertically centered */
+}
+
+img {
+    width: 50%;
+    /* flex: 0 1 auto; Allow the image to resize but not grow beyond its content */
+}
+
+.Adminpic .right {
+    width: 40%;
+    flex: 1; /* Allow the heading to take the remaining space */
+    padding-left: 1rem; /* Optional: Add some space between the image and heading */
+    font-weight: 900;
+    font-style: italic;
+}
+
+
+
+
