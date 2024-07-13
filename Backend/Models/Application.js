@@ -7,27 +7,43 @@ const applicationSchema = new mongoose.Schema({
         ref: 'Employee',
         required: true
     },
-    allowanceType: {
-        type: String,
-        required: true
+    employeeName: {
+    type: String,
+    required: true
+  },
+  employeeId: {
+    type: String,
+    required: true
+  },
+  allowanceType: {
+    type: String,
+    default: '' // Provide a default value if needed
+  },
+  customAllowanceType: {
+    type: String,
+    default: ''
+  },
+  selectedAllowanceTypes: [{
+    type: {
+      type: String,
+      required: true
     },
-    startDate: {
-        type: Date,
-        required: true
+    amount: {
+      type: Number,
+      required: true
     },
-    endDate: {
-        type: Date,
-        required: true
-    },
-    status: {
-        type: String,
-        enum: ['pending', 'accepted', 'rejected'],
-        default: 'pending'
-    },
-    bill: {
-        type: String, // URL or path to the uploaded bill PDF/DOC
-        required: true
+    description: {
+      type: String,
+      required: true
     }
+  }],
+  date: {
+    type: Date,
+    required: true
+  },
+  files: [{
+    type: String // Assuming you store file paths or URLs
+  }]
 });
 
 const Application = mongoose.model("Application", applicationSchema);

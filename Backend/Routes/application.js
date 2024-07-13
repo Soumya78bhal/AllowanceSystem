@@ -2,7 +2,7 @@ const express = require('express');
 const Application = require('../Models/Application'); // Adjust the path as necessary
 const Employee = require('../Models/Employee'); // Ensure Employee model is also imported
 const router = express.Router();
-
+const {ObjectId}=require('mongodb')
 
 // POST /applications - Create a new application
 router.post('/register', async (req, res) => {
@@ -65,4 +65,30 @@ router.get('/applications/:id', async (req, res) => {
     }
 });
 
+//GET /applications/user/:id - Retrieve applications of a user
+
+router.get('/userApplications/:id',async(req,res)=>{
+    const {id}=req.params;
+
+    try{
+        const data= await Application.find({employee:id});
+        if(!data){
+            return res.status(404).send({message:"Application not found"});
+        }
+        res.status(200).send(data)
+    }catch(e){
+        console.error("Error retrieving application: ", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+})
+
+
+router.post('/postApplication',async (req,res)=>{
+    console.log(req.body);
+
+    const data=new Application({
+        ...req.body
+    });
+    await data.save();
+})
 module.exports = router;

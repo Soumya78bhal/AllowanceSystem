@@ -1,10 +1,16 @@
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "../Header.jsx";
 import "./DashBoad.css";
 import { FaArrowLeft } from "react-icons/fa";
+import axios from 'axios';
+
+
+const url="http://localhost:5000/api/application/applications";
+
+
 
 const data = [
     {
@@ -160,6 +166,7 @@ const data = [
 ];
 
 const DashBoad = () => {
+    const [data1,setData]=useState('');
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
 
@@ -167,6 +174,22 @@ const DashBoad = () => {
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
+
+    useEffect(()=>{
+        const getData=async ()=>{
+        await axios.get(url).then((res=>{
+            setData(res.data);
+            console.log(data)
+        }))
+    }
+    getData();
+    },[]);
+
+    
+        
+    
+    
+    
 
     const handleAction = (action) => {
         toast(`Employee has been ${action}`);
@@ -192,18 +215,16 @@ const DashBoad = () => {
                                             <th scope="col">Employee ID</th>
                                             <th scope="col">Employee Name</th>
                                             <th scope="col">Apply Date</th>
-                                            <th scope="col">Allwance</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, index) => (
+                                        {data1 && data1.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td>{item.Employee_ID}</td>
-                                                <td>{item.Apply_Name}</td>
-                                                <td>{item.Apply_Date}</td>
-                                                <td>{item.Allwance}</td>
+                                                <td>{item.employee.name}</td>
+                                                <td>{item.employee._id}</td>
+                                                <td>{item.startDate}</td>
                                                 <td>
                                                     <button
                                                         className="btn btn-warning"
