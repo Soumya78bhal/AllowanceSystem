@@ -2,16 +2,6 @@
 
 The Allowance Management System is a web application designed to streamline the process of managing employee allowances. The system allows for both admin and employee interactions, ensuring that employees can apply for allowances and admins can manage and verify these applications efficiently.
 
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Database Schema](#database-schema)
-- [File Structure](#file-structure)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
 - **Admin Functions:**
   - Admin Login
@@ -25,8 +15,6 @@ The Allowance Management System is a web application designed to streamline the 
   - New Employee Registration
   - Apply for Allowances
   - Check Allowance Status
-  - Employee Management
-  - Allowance Approval
 
 ## Technologies Used
 - **Frontend:**
@@ -37,4 +25,5 @@ The Allowance Management System is a web application designed to streamline the 
 
 - **Database:**
   - MongoDB Compass
+
 
