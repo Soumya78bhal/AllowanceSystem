@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import Header from "../Header.jsx";
 import './UserAllowance.css';
 
 const UserAllowance = () => {
@@ -95,11 +93,10 @@ const UserAllowance = () => {
 
     return (
       <>
-        <Header />
-        <br/>
+       
         <div className="form-container">
         
-            <h2>Allowance Form Submission</h2>
+            <h2>Allowance Form</h2>
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="column">

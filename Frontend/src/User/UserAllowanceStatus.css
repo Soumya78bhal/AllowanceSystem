@@ -1,0 +1,44 @@
+.UserAllowance {
+    width: 100%;
+    height: 20px;
+    padding: 2rem;
+    padding-top: 1rem;
+  }
+  .UserAllowance h1 {
+    font-size: 2.7rem;
+  }
+  .UserAllowance label {
+    font-size: 1.2rem;
+  }
+
+
+
+
+  .UserAllowance .details-container {
+    text-align: left;
+    color: gray;
+    padding: 20px;
+}
+
+.UserAllowance .details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.UserAllowance .details-table th,
+.UserAllowance .details-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.UserAllowance .details-table th {
+    background-color: #f2f2f2;
+}
+
+.Detail_buttom{
+  margin-right: 20px;
+}
+  
+
+
+ 

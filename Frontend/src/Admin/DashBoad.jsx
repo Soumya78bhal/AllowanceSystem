@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import Header from "../Header.jsx";
 import "./DashBoad.css";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -176,10 +174,7 @@ const DashBoad = () => {
     return (
         <>
             <main className="DashBoad">
-                <Header />
-                <br />
-                {/* <h1>DashBoad</h1> */}
-                <br />
+                
 
                 {toggle === 0 && (
                     <>

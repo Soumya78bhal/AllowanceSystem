@@ -2,7 +2,8 @@
 
 
 /* ---------CSS for Home Page------------ */
-.homePage {
+
+/* .homePage {
   padding: 2rem;
   padding-top: 1rem;
   width: 100%;
@@ -12,7 +13,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-}
+} */
 .hompage_header {
   width: 100%;
   height: auto;
@@ -20,11 +21,15 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  background-color: #EEEDEB ;
+  border: none;
 }
 .Railway_logo,
 .Emblem_logo {
   height: 6rem;
   width: auto;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 .homepage_heading {
   display: flex;
@@ -34,14 +39,15 @@
   height: auto;
 }
 .homepage_heading h1 {
-  font-size: 3rem;
+  /* font-size: 3rem; */
+  color: #402E7A;
 }
 
 .homePage p {
   font-size: 1.1rem;
 }
 .homepage_heading p {
-  font-size: 2.18rem;
+  font-size: 1.7rem;
   font-style: italic;
   color: red;
 }

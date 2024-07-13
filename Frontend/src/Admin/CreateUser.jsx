@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CreateUser.css";
-import Header from "../Header.jsx"
+
 
 const CreateUser = () => {
   const [step, setStep] = useState(0);
@@ -90,15 +90,12 @@ const CreateUser = () => {
 
   return (  
     <>
-    <Header />
+    
     <div className="container-fluid" id="grad1">
-      <button type="button" class="btn btn-outline-dark top-right-button">Login</button>
+      {/* <button type="button" class="btn btn-outline-dark top-right-button">Login</button> */}
       <div className="row justify-content-center mt-0">
-        <div className=" innercontainer  col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2 ">
-          <div className="card px-0 pt-3 pb-0 mt-3 mb-3">
-            <h2>
-              <strong>Sign Up Your User Account</strong>
-            </h2>
+        <div className=" innercontainer  col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-0 mb-2 ">
+          <div className="card ">
             {/* <p>Fill all form fields to go to the next step</p> */}
             <div className="row">
               <div className="col-md-12 mx-0">

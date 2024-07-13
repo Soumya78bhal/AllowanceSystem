@@ -20,8 +20,8 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* background: url(./components/baccground.jpg) no-repeat; */
-    background-color: #00152a;
+    background: url(./assets/background3.jpg) no-repeat;
+    /* background-color: #00152a; */
     background-size: cover;
     background-position: center;
   }
