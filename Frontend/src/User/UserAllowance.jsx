@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Header from "../Header.jsx";
 import './UserAllowance.css';
-
+import axios from 'axios';
 const UserAllowance = () => {
     const [formData, setFormData] = useState({
         employeeName: '',
@@ -79,8 +79,16 @@ const UserAllowance = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('dafsdf')
         // Handle form submission
         console.log('Form submitted:', formData);
+        const url="http://localhost:5000/api/application/postApplication"
+        const id="6691fe89bf8dce82ec9bc900" 
+        axios.post(url,{
+            ...formData,
+            employee: id,
+            files:"faskjhfsda"
+        });
         // Reset form fields
         setFormData({
             employeeName: '',

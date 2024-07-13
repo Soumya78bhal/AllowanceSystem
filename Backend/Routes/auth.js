@@ -33,13 +33,16 @@ router.post("/login", loginValidator, async (req, res) => {
 });
 
 router.post("/register", signupValidator, async (req, res) => {
+  
   const errors = validationResult(req);
+  
   if (errors.isEmpty()) {
     const { name, password } = req.body;
 
     try {
       const existingUser = await Employee.findOne({ name: name });
       if (existingUser) {
+        
         return res.status(409).send({ message: "Name already exists" });
       }
       let hashedPassword = "";
@@ -49,6 +52,7 @@ router.post("/register", signupValidator, async (req, res) => {
           password: hash,
         });
         await newUser.save();
+        console.log("user saved")
       });
 
       res.status(201).send({ message: "User created successfully" });

@@ -3,14 +3,17 @@ import React, { useState } from "react";
 // import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from 'react-icons/fa';
-
+import axios from 'axios'
 import "./index.css";
 import "./login.css";
+import { CgPassword } from "react-icons/cg";
 // import './RegisterForm.css';
 
 const Registration = () => {
+  
   const [toggle, settoggle] = useState(0);
   const [step, setStep] = useState(0);
+  const [username,setUsername]=useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -60,6 +63,8 @@ const Registration = () => {
     offerLetter: null,
 
   });
+
+  
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -117,14 +122,32 @@ const Registration = () => {
     return isValid;
   };
  
+  const handleCreateAccount= async(e)=>{
+    e.preventDefault();
+    const url="http://localhost:5000/api/auth/register"
+
+    if(newPassword===confirmPassword){
+      axios.post(url,{
+        name:username,
+        password:newPassword
+    })
+    }
+    else{
+      setErrorMessage('password do not match')
+    }
+
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loginRole === 'admin') {
-      navigate("/user/homePage");
-    } else {
+    if (loginRole != 'admin') {
       
       navigate("/admin/homePage");
+    } else {
+      
+      navigate("/user/homePage");
     }
   };
 
@@ -193,7 +216,7 @@ const Registration = () => {
           <div className="Login">
 
             <div className='wrapper'>
-              <form onSubmit={handleRegistor}>
+              <form >
                 <h1>Register</h1>
 
                 {/* Employee ID */}
@@ -208,7 +231,9 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='username'>Username:</label>
                   <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter a username' required />
+                    <input type='text' id='username' placeholder='Enter a username' required on onChange={(e)=>{
+                      setUsername(e.target.value)
+                    }}/>
                     <FaUser className='icon' />
                   </div>
                 </div>
@@ -247,7 +272,7 @@ const Registration = () => {
                 </div>
 
                 {/* Create Account Button */}
-                <button type='submit' className='btn btn-primary'>Create Account</button>
+                <button type='submit' className='btn btn-primary' onClick={handleCreateAccount}>Create Account</button>
 
                 {/* Additional Login Option */}
                 
