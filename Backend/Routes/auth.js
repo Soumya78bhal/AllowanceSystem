@@ -1,11 +1,15 @@
-const { validationResult } = require("express-validator");
 const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const Employee = require("../Models/Employee");
+const Employee = require("../Models/Employee/Employee");
 const bodyParser = require("body-parser");
 const signupValidator = require("../Validators/signupValidator");
 const loginValidator = require("../Validators/loginValidator");
+const { body, validationResult } = require('express-validator');
+
+router.get("/", (req,res) => {
+  res.send("Hello from auth backend!");
+})
 
 
 router.post("/login", loginValidator, async (req, res) => {
@@ -32,32 +36,37 @@ router.post("/login", loginValidator, async (req, res) => {
   }
 });
 
-router.post("/register", signupValidator, async (req, res) => {
+router.post("/register", [
+  body('employeeId').notEmpty().withMessage('Employee ID is required'),
+  body('username').notEmpty().withMessage('Username is required'),
+  body('password').isLength({min:8}).withMessage('Minimum length is 8 characters'),
+], async (req, res) => {
   const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    const { name, password } = req.body;
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-    try {
-      const existingUser = await Employee.findOne({ name: name });
-      if (existingUser) {
-        return res.status(409).send({ message: "Name already exists" });
-      }
-      let hashedPassword = "";
-      bcrypt.hash(password, 10, async (err, hash) => {
-        const newUser = new Employee({
-          ...req.body,
-          password: hash,
-        });
-        await newUser.save();
-      });
+  const { employeeId, username, password } = req.body;
 
-      res.status(201).send({ message: "User created successfully" });
-    } catch (error) {
-      console.error("Error during signup: ", error);
-      res.status(500).send({ message: "Internal server error" });
+  try {
+    const existingUser = await Employee.findOne({ employeeId });
+    if (existingUser) {
+      return res.status(409).send({ message: "Employee ID already exists" });
     }
-  } else {
-    res.send(errors);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newEmployee = new Employee({
+      employeeId,
+      username,
+      password: hashedPassword,
+    });
+
+    const savedEmployee = await newEmployee.save();
+    res.status(201).send({ message: "Account initiated successfully", empId: savedEmployee._id });
+  } catch (error) {
+    console.error("Error during signup: ", error);
+    res.status(500).send({ message: "Internal server error" });
   }
 });
 
