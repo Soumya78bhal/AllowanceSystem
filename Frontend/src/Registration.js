@@ -3,7 +3,11 @@ import React, { useState } from "react";
 // import Form from 'react-bootstrap/Form';
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from 'react-icons/fa';
+
+import Header from "./Header.jsx";
+
 import axios from 'axios'
+
 import "./index.css";
 import "./login.css";
 import { CgPassword } from "react-icons/cg";
@@ -125,7 +129,7 @@ const Registration = () => {
   };
   const navigate = useNavigate();
 
- 
+
   // const handleSubmitUser = () => {
   //   navigate("/user");
 
@@ -133,6 +137,7 @@ const Registration = () => {
 
   const handleSubmits = (e) => {
     e.preventDefault();
+    settoggle(0);
     // Validate formData and set errors
     // Submit formData
     alert("Your profile data successfully submitted")
@@ -211,11 +216,12 @@ const Registration = () => {
     setErrors(currentErrors);
     return isValid;
   };
+
  const dispatch = useDispatch();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
       try {
         const response = await axios.post('http://localhost:5000/api/auth/login', {loginRole, username: lusername, password: lpassword});
         console.log(response.data);
@@ -250,27 +256,32 @@ const Registration = () => {
   };
 
   return (
-    <mian>
-      {toggle === 0 && (
-        <>
-          <div className="Login">
+    <>
+    <Header />
+      <mian>
+        {toggle === 0 && (
+          <>
+            <div className="Login">
+              <div className='wrapper'>
+                <form onSubmit={handleSubmit}>
+                  <h1>Login</h1>
 
-
-            <div className='wrapper'>
-              <form onSubmit={handleSubmit}>
-                <h1>Login</h1>
-
-                {/* Login As */}
-                <div className='form-group'>
-                  <label htmlFor='loginRole'>Login as:</label>
-                  <div className='input-box'>
-                    <select id='loginRole' className='dropdown' onChange={(e) => setLoginRole(e.target.value)} required>
+                  {/* Login As */}
+                  <div className='form-group'>
+                    <label htmlFor='loginRole'>Login as:</label>
+                    <div className='input-box'>
+                      <select
+                        id='loginRole'
+                        className='dropdown'
+                        value={loginRole}
+                        onChange={(e) => setLoginRole(e.target.value)}
+                        required>
                       <option value=''>Select your role</option>
                       <option value='admin'>Admin</option>
                       <option value='employee'>Employee</option>
                     </select>
                   </div>
-                </div>
+
 
                 {/* Username */}
                 <div className='form-group'>
@@ -279,7 +290,7 @@ const Registration = () => {
                     <input type='text' id='username' placeholder='Enter your username' value={lusername} onChange={(e) => setLusername(e.target.value)} autocomplete="off" required />
                     <FaUser className='icon' />
                   </div>
-                </div>
+
 
                 {/* Password */}
                 <div className='form-group'>
@@ -288,30 +299,27 @@ const Registration = () => {
                     <input type='password' id='password' value={lpassword} onChange={(e) => setLpassword(e.target.value)} placeholder='Enter your password' required />
                     <FaLock className='icon' />
                   </div>
-                </div>
 
-                {/* Login Button */}
-                <button type='submit' onClick={(e) => handleSubmit(e)}>Login</button>
+                  {/* Login Button */}
+                  <button type='submit'>Login</button>
 
-                {/* Register Link */}
-                <div className='register-link'>
-                  <p>
-                    Don't have an account? <a className="btn btn-outline-danger" onClick={() => settoggle(1)}>Register</a>
-                  </p>
-                </div>
-              </form>
-
-
+                  {/* Register Link */}
+                  <div className='register-link'>
+                    <p>
+                      Don't have an account? <a className="btn btn-outline-danger" onClick={() => settoggle(1)}>Register</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
 
-        </>
+          </>
 
 
-      )}
-      {toggle === 1 && (
-        <>
-          <div className="Login">
+        )}
+        {toggle === 1 && (
+          <>
+            <div className="Login">
 
             <div className='wrapper'>
               <form >
@@ -323,7 +331,6 @@ const Registration = () => {
                   <div className='input-box'>
                     <input type='text' id='loginRole' placeholder='Enter your Employee ID' value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required />
                   </div>
-                </div>
 
                 {/* Username */}
                 <div className='form-group'>
@@ -332,40 +339,39 @@ const Registration = () => {
                     <input type='text' id='username' placeholder='Enter a username' value={username} onChange={(e) => setUsername(e.target.value)} required />
                     <FaUser className='icon' />
                   </div>
-                </div>
 
-                {/* New Password */}
-                <div className='form-group'>
-                  <label htmlFor='newPassword'>New Password:</label>
-                  <div className='input-box'>
-                    <input
-                      type='password'
-                      id='newPassword'
-                      placeholder='Create new password'
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      required
-                    />
-                    <FaLock className='icon' />
+                  {/* New Password */}
+                  <div className='form-group'>
+                    <label htmlFor='newPassword'>New Password:</label>
+                    <div className='input-box'>
+                      <input
+                        type='password'
+                        id='newPassword'
+                        placeholder='Create new password'
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                      />
+                      <FaLock className='icon' />
+                    </div>
                   </div>
-                </div>
 
-                {/* Confirm Password */}
-                <div className='form-group'>
-                  <label htmlFor='confirmPassword'>Confirm Password:</label>
-                  <div className='input-box'>
-                    <input
-                      type='password'
-                      id='confirmPassword'
-                      placeholder='Confirm password'
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                    <FaLock className='icon' />
+                  {/* Confirm Password */}
+                  <div className='form-group'>
+                    <label htmlFor='confirmPassword'>Confirm Password:</label>
+                    <div className='input-box'>
+                      <input
+                        type='password'
+                        id='confirmPassword'
+                        placeholder='Confirm password'
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                      />
+                      <FaLock className='icon' />
+                    </div>
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                   </div>
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                </div>
 
                 {/* Create Account Button */}
                 <button type='submit' className='btn btn-primary' onClick={handleRegistor}>Create Account</button>
@@ -882,11 +888,11 @@ const Registration = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-        </>
-      )}
-    </mian >
+          </>
+        )}
+      </mian >
+    </>
   );
 };
 

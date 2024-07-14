@@ -1,0 +1,109 @@
+/* body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+} */
+
+.rounded-circle{
+    margin-left: 500px;
+    border-radius: 50%;
+    width: 100px;
+  }
+  
+  .container {
+    width: 90%;
+    margin: auto;
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-photo, .profile-settings {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  .profile-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-settings {
+    min-width: 100vh;
+    width: 100%;
+  }
+  
+  .profile-photo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .profile-settings h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .profile-settings form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .left-container, .right-container {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    
+  }
+  
+  .profile-settings input, .profile-settings select, .profile-settings label {
+    margin: 10px 0;
+  }
+  
+  .profile-settings input, .profile-settings select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .profile-settings button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #5b51d8;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .profile-settings button:hover {
+    background: #4b41c8;
+  }
+  
+  .edit-button {
+    background: #28a745;
+    margin-bottom: 10px;
+  }
+  
+  .edit-button:hover {
+    background: #218838;
+  }
+  
+  @media (max-width: 767px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .left-container, .right-container {
+      width: 100%;
+      
+    }
+  }
+  

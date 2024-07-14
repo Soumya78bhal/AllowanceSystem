@@ -1,49 +1,56 @@
 import { Outlet } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "./DashBoad.css";
+import React, { useState } from "react";
+import './UserAllowanceStatus.css';
 import { FaArrowLeft } from "react-icons/fa";
-import axios from 'axios';
 
 
-const url="http://localhost:5000/api/application/applications";
-const DashBoad = () => {
-    const [data1,setData]=useState('');
+const data = [
+    {
+      Employee_ID: "E001",
+      Employee_Name: "John Doe",
+      Allowance_No: "001",
+      Allowance_Type: "Travel",
+      Apply_Date: "2024-07-10",
+      Amount: 150,
+      Description: "Business trip to NYC",
+      Status: "Approved"
+    },
+    {
+      Employee_ID: "E002",
+      Employee_Name: "Jane Smith",
+      Allowance_No: "002",
+      Allowance_Type: "Food",
+      Apply_Date: "2024-07-11",
+      Amount: 50,
+      Description: "Client meeting lunch",
+      Status: "Pending"
+    },
+    {
+      Employee_ID: "E003",
+      Employee_Name: "Sam Brown",
+      Allowance_No: "003",
+      Allowance_Type: "Accommodation",
+      Apply_Date: "2024-07-12",
+      Amount: 300,
+      Description: "Hotel stay for conference",
+      Status: "Rejected"
+    }
+  ];
+
+
+
+const UserAllowanceSataus = () => {
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-    const handleUpdatePlan = (employee) => {    
+    const handleUpdatePlan = (employee) => {
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
 
-    //Fetch application data
-    useEffect(()=>{
-        const getData=async ()=>{
-        await axios.get(url).then((res=>{
-            setData(res.data);
-        }))
-    }
-    getData();
-    },[toggle]);
-  
-// Update the status of applications
-    const handleAction = (action) => {
-        axios.post('http://localhost:5000/api/application/updateApplication',{
-            _id:selectedEmployee._id,
-            status:action
-        }).then((res)=>{
-            if(res.data){
-                toast(`Employee has been ${action}`);
-                setToggle(0); // Redirect back to the main table view
-            }
-        })
-
-    };
-
     return (
         <>
-            <main className="DashBoad">
+            <main className="UserAllowance">
                 
 
                 {toggle === 0 && (
@@ -54,19 +61,21 @@ const DashBoad = () => {
                                     <thead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 1 }}>
                                         <tr>
                                             <th scope="col">Sl no.</th>
-                                            <th scope="col">Employee ID</th>
-                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Allowance Number</th>
+                                            <th scope="col">Allowance Type</th>
                                             <th scope="col">Apply Date</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data1 && data1.map((item, index) => (
+                                        {data.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td>{item.employee.username}</td>
-                                                <td>{item.employee.employeeId}</td>
-                                                <td>{item.date.substring(0, 10)}</td>
+                                                <td>{item.Allowance_No}</td>
+                                                <td>{item.Allowance_Type}</td>
+                                                <td>{item.Apply_Date}</td>
+                                                <td>{item.Status}</td>
                                                 <td>
                                                     <button
                                                         className="btn btn-warning"
@@ -93,63 +102,53 @@ const DashBoad = () => {
                             <FaArrowLeft /> Go Back
                             </button>
                             <div className="details-container">
-                                <h1>Employee Details</h1>
+                                <h1>Allowance Status</h1>
                                 <table className="details-table">
                                     <tbody>
                                         <tr>
                                             <th>Employee ID</th>
-                                            <td>{selectedEmployee.employeeId}</td>
+                                            <td>{selectedEmployee.Employee_ID}</td>
                                         </tr>
                                         <tr>
                                             <th>Employee Name</th>
-                                            <td>{selectedEmployee.employeeName}</td>
+                                            <td>{selectedEmployee.Employee_Name}</td>
                                         </tr>
-                                        
                                         <tr>
-                                            <th>Date</th>
-                                            <td>{selectedEmployee.date.substring(0,10)}</td>
+                                            <th>Allwance Number</th>
+                                            <td>{selectedEmployee.Allowance_No}</td>
                                         </tr>
-                                      
-                                            {selectedEmployee.selectedAllowanceTypes.map((item)=>(
-                                            <tr>
+                                        <tr>
                                             <th>Allowance Type</th>
-                                            <td>{item.type}</td>
+                                            <td>{selectedEmployee.Allowance_Type}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Apply Date</th>
+                                            <td>{selectedEmployee.Apply_Date}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Amount</th>
-                                            <td>{item.amount}</td>
-                                            </tr>
-                                            ))}
+                                            <td>{selectedEmployee.Amount}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td>{selectedEmployee.Description}</td>
+                                        </tr>
                                         <tr>
                                             <th>Status</th>
-                                            <td>{selectedEmployee.status}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Documents</th>
-                                            <td>
-                                            {
-                                                selectedEmployee.files.map((item)=>(
-                                                    <tr><a href={item}>{item}</a></tr>
-                                                ))
-                                            }
-                                            </td>
+                                            <td>{selectedEmployee.Status}</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <br />
-                                <button className="btn btn-success Detail_buttom" onClick={() => handleAction('Accepted')}>
-                                    Approve
-                                </button>
-                                <button className="btn btn-danger Detail_buttom" onClick={() => handleAction('Rejected')}>
-                                    Reject
-                                </button>
                             </div>
                         </div>
                     </>
                 )}
             </main>
             <Outlet />
-            <ToastContainer />
+            
         </>
     );
 };
 
-export default DashBoad;
+export default UserAllowanceSataus;
+

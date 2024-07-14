@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import React from "react";
 
 import 'react-toastify/dist/ReactToastify.css';
-import Header from "../Header.jsx";
+
 // import "./DashBoad.css";  // Import the CSS file
 import Employee from "../assets/employee.jpg"
 import '../Admin/AdminHomePage.css';
@@ -14,8 +14,6 @@ const AdminHomePage = () => {
     return (
         <>
             <main >
-                <Header />
-                
                 
                 <div className="Adminpic">
                     

@@ -1,7 +1,7 @@
 // import { Outlet } from "react-router-dom";
 import React from "react";
 import { useState } from "react";
-import Header from "../Header.jsx"
+
 import "./DashBoad.css";
 import { FaArrowLeft } from "react-icons/fa";
 const employees = [
@@ -145,9 +145,7 @@ const VerifyEmployee = () => {
     return (
         <>
             <main className="DashBoad">
-                <Header />
-                <br />
-                <br />
+               
 
                 {toggle === 0 && (
                     <>

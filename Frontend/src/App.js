@@ -6,12 +6,14 @@ import Registration from './Registration';
 import AdminSidebar from "./Admin/AdminSidebar";
 import CreateUser from "./Admin/CreateUser";
 import DashBoad from "./Admin/DashBoad";
-import UserAllowance from "./User/UserAllowance";
 import VerifyEmployee from "./Admin/VerifyEmployee";
-import UserSidebar from "./User/UserSidebar.jsx";
 import AdminHomePage from "./Admin/AdminHomePage.jsx";
-import UserHomePage from "./User/UserHomePage.jsx";
 
+import UserSidebar from "./User/UserSidebar.jsx";
+import UserHomePage from "./User/UserHomePage.jsx";
+import UserAllowance from "./User/UserAllowance";
+import UserProfilePage from "./User/UserProfilePage.jsx";
+import UserAllowanceStatus from './User/UserAllowanceStatus';
 
 function App() {
   return (
@@ -43,7 +45,9 @@ function App() {
               element={<UserSidebar />} >
                 <Route path="/user/homePage" element={<UserHomePage />}></Route>
                  <Route path="/user/allowance" element={<UserAllowance />}></Route>
-                 <Route path="/user/status" element={<CreateUser />}></Route>
+                 <Route path="/user/status" element={<UserAllowanceStatus />}></Route>
+                 <Route path="/user/profile" element={<UserProfilePage />}></Route>
+
             </Route>
             
           </Routes>

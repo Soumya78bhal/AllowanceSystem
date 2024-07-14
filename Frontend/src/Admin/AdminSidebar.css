@@ -1,70 +1,73 @@
 .layout {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .dashboard {
-    min-width: 23.5rem;
-    background-color: #1d2b53;
-    padding: 1rem;
-    gap: 1rem;
-    margin-right: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    overflow-y: auto;
-    padding: 0rem 2rem;
-  }
-  
-  .dashboard ul {
-    list-style: none;
-    text-align: left;
-    padding-left: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  
-  .dashboard h2 {
-    color: white;
-    padding: 1rem 0.5rem;
-    font-size: 1.8rem;
-    border-bottom: 2px solid white;
-    margin-bottom: 1rem;
-  }
-  
-  .dashboard a {
-    text-decoration: none;
-    color: black;
-    background-color: #ebf4f6;
-    padding: 0.6rem 1rem;
-    font-size: 1.2rem;
-    border-radius: 0.7rem;
-    transition: 0.2s ease-in;
-    width: 100%;
-    display: block;
-  }
-  
-  .dashboard a:hover {
-    background-color: #ff7e8b;
-  }
-  
-  .logoutbtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    border: none;
-    background: transparent;
-    color: #d03a49;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-top: 390px; 
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-  }
-  
+  display: flex;
+  height: 82vh;
+}
+
+.dashboard {
+  min-width: 23.5rem;
+  background-color: #402E7A;
+  padding: 1rem;
+  gap: 1rem;
+  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: 0rem 2rem;
+}
+
+.dashboard ul {
+  list-style: none;
+  text-align: left;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.dashboard h2 {
+  color: white;
+  padding: 1rem 0.5rem;
+  font-size: 1.8rem;
+  border-bottom: 2px solid white;
+  margin-bottom: 1rem;
+}
+
+.dashboard a {
+  text-decoration: none;
+  color: black;
+  background-color: #ebf4f6;
+  padding: 0.6rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.7rem;
+  transition: 0.2s ease-in;
+  width: 100%;
+  display: block;
+}
+
+.dashboard a:hover {
+  background-color: #cbd5f7;
+}
+
+.dashboard a.active {
+  background-color: #4B70F5;
+  color: white;
+}
+
+.logoutbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: none;
+  background: transparent;
+  color: #E7D4B5;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 200px;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+}

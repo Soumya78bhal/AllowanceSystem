@@ -1,5 +1,7 @@
 import { NavLink, Outlet, useNavigate} from "react-router-dom";
 import { MdLogout } from "react-icons/md";
+import Header from "../Header.jsx";
+import Footer from "../Footer.jsx";
 import "../Admin/AdminSidebar.css";
 import { useDispatch } from "react-redux";
 import { logout } from "../Feature/Userslice";
@@ -15,6 +17,8 @@ const UserSidebar = () => {
   };
 
   return (
+    <>
+     <Header />
     <div className="layout">
     
       <nav className="dashboard">
@@ -26,9 +30,9 @@ const UserSidebar = () => {
           <li>
             <NavLink to="/user/status">Allowance Status</NavLink>
           </li>
-          {/* <li>
-            <NavLink to="/admin/verifyEmployee">verify Employee registration</NavLink>
-          </li> */}
+          <li>
+            <NavLink to="/user/profile">Profile Page</NavLink>
+          </li>
         </ul>
         <button className="logoutbtn" onClick={handleLogout}>
           Logout <MdLogout />
@@ -38,7 +42,9 @@ const UserSidebar = () => {
         <Outlet />
         {/* <Navigate to="/admin/createUser" /> */}
       </div>
+      <Footer />
     </div>
+    </>
   );
 };
 
