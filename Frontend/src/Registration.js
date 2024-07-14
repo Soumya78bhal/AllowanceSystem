@@ -142,7 +142,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loginRole != 'admin') {
+    if (loginRole === 'admin') {
       
       navigate("/admin/homePage");
     } else {

@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
 // GET /applications - Retrieve all applications
 router.get('/applications', async (req, res) => {
     try {
-        const applications = await Application.find().populate('employee');
+        const applications = await Application.find({status:"pending"}).populate('employee');
         res.status(200).send(applications);
     } catch (error) {
         console.error("Error retrieving applications: ", error);
