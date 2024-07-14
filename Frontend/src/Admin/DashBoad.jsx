@@ -179,7 +179,7 @@ const DashBoad = () => {
         const getData=async ()=>{
         await axios.get(url).then((res=>{
             setData(res.data);
-            console.log(data)
+            console.log(data1)
         }))
     }
     getData();
@@ -222,9 +222,9 @@ const DashBoad = () => {
                                         {data1 && data1.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td>{item.employee.name}</td>
-                                                <td>{item.employee._id}</td>
-                                                <td>{item.startDate}</td>
+                                                <td>{item.employee.username}</td>
+                                                <td>{item.employee.employeeId}</td>
+                                                <td>{item.date.substring(0, 10)}</td>
                                                 <td>
                                                     <button
                                                         className="btn btn-warning"

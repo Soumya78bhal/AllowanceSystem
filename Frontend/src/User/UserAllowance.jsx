@@ -1,8 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from "../Header.jsx";
 import './UserAllowance.css';
 import axios from 'axios';
+
+
 const UserAllowance = () => {
     const [formData, setFormData] = useState({
         employeeName: '',
@@ -14,6 +16,26 @@ const UserAllowance = () => {
         files: []
     });
 
+        useEffect(
+            ()=> {
+                async function initialData(){
+
+                    await axios.get('http://localhost:5000/api/application/userData/6692b303bfe18fc580fae4db')
+                    .then((res)=>{
+                        console.log(res)
+                        setFormData({
+                            ...formData,
+                            employeeName:res.data.username,
+                            employeeId:res.data.employeeId
+                        })
+                    })
+                }
+                //console.log(formData)
+                initialData();
+            }
+        ,[]
+        )
+  
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -83,7 +105,7 @@ const UserAllowance = () => {
         // Handle form submission
         console.log('Form submitted:', formData);
         const url="http://localhost:5000/api/application/postApplication"
-        const id="6691fe89bf8dce82ec9bc900" 
+        const id="6692b303bfe18fc580fae4db" 
         axios.post(url,{
             ...formData,
             employee: id,
@@ -119,6 +141,7 @@ const UserAllowance = () => {
                             value={formData.employeeName}
                             onChange={handleChange}
                             required
+                            readOnly
                         />
                     </div>
                     <div className="column">
@@ -130,6 +153,7 @@ const UserAllowance = () => {
                             value={formData.employeeId}
                             onChange={handleChange}
                             required
+                            readOnly
                         />
                     </div>
                 </div>
@@ -171,6 +195,7 @@ const UserAllowance = () => {
                                     placeholder="Amount"
                                     value={allowance.amount}
                                     onChange={(e) => handleAllowanceChange(index, 'amount', e.target.value)}
+                                    required={true}
                                 />
                                 <textarea
                                     placeholder="Description"

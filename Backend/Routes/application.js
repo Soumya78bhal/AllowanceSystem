@@ -1,6 +1,6 @@
 const express = require('express');
 const Application = require('../Models/Application'); // Adjust the path as necessary
-const Employee = require('../Models/Employee'); // Ensure Employee model is also imported
+const Employee = require('../Models/Employee/Employee'); // Ensure Employee model is also imported
 const router = express.Router();
 const {ObjectId}=require('mongodb')
 
@@ -41,7 +41,7 @@ router.post('/register', async (req, res) => {
 // GET /applications - Retrieve all applications
 router.get('/applications', async (req, res) => {
     try {
-        const applications = await Application.find({status:"pending"}).populate('employee');
+        const applications = await Application.find({status:"Pending"}).populate('employee');
         res.status(200).send(applications);
     } catch (error) {
         console.error("Error retrieving applications: ", error);
@@ -82,7 +82,22 @@ router.get('/userApplications/:id',async(req,res)=>{
     }
 })
 
+//Get data of a user
+router.get('/userData/:id',async(req,res)=>{
+    const {id}=req.params;
+    try{
+        const data= await Employee.findOne({_id:id});
+        if(!data){
+            return res.status(404).send({message:"Application not found"});
+        }
+        res.status(200).send(data)
+    }catch(e){
+        console.error("Error retrieving application: ", e);
+        res.status(500).send({ message: "Internal server error" });
+    }
+})
 
+//Save Applications
 router.post('/postApplication',async (req,res)=>{
     console.log(req.body);
 

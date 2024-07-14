@@ -37,6 +37,11 @@ const applicationSchema = new mongoose.Schema({
       required: true
     }
   }],
+  status:{
+    type:String,
+    enum:["Accepted","Rejeccted","Pending"],
+    default:"Pending"
+  },
   date: {
     type: Date,
     required: true
