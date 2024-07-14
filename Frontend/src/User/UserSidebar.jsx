@@ -1,12 +1,16 @@
 import { NavLink, Outlet, useNavigate} from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import "../Admin/AdminSidebar.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../Feature/Userslice";
 
 
 const UserSidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(logout());
     navigate("/login");
   };
 

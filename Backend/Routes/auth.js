@@ -2,9 +2,6 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const Employee = require("../Models/Employee/Employee");
-const bodyParser = require("body-parser");
-const signupValidator = require("../Validators/signupValidator");
-const loginValidator = require("../Validators/loginValidator");
 const { body, validationResult } = require('express-validator');
 
 router.get("/", (req,res) => {
@@ -12,21 +9,25 @@ router.get("/", (req,res) => {
 })
 
 
-router.post("/login", loginValidator, async (req, res) => {
+router.post("/login", async (req, res) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    const { name, password } = req.body;
+    const { loginRole, username, password } = req.body;
 
     try {
-      const user = await Employee.findOne({ name: name });
+      const user = await Employee.findOne({ username });
       if (!user) {
         return res.status(404).send({ message: "User does not exist" });
       }
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(401).send({ message: "Wrong password" });
+      } 
+      console.log(`loginRole: ${loginRole}, user.isAdmin: ${user.isAdmin}`);
+      if (loginRole === "admin" && !user.isAdmin) {
+        return res.status(401).send({ message: "You are not an admin!" });
       }
-      res.status(200).send({ message: "Successful login" });
+      res.status(200).send({ message: "Successful login", user });
     } catch (error) {
       console.error("Error during login: ", error);
       res.status(500).send({ message: "Internal server error" });
@@ -37,8 +38,6 @@ router.post("/login", loginValidator, async (req, res) => {
 });
 
 router.post("/register", [
-  body('employeeId').notEmpty().withMessage('Employee ID is required'),
-  body('username').notEmpty().withMessage('Username is required'),
   body('password').isLength({min:8}).withMessage('Minimum length is 8 characters'),
 ], async (req, res) => {
   const errors = validationResult(req);

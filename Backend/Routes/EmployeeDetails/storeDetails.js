@@ -29,7 +29,7 @@ router.post(
     } = req.body;
 
     try {
-      let personalDetails = await PersonalDetails.findOne({ employeeId });
+      let personalDetails = await PersonalDetails.findOne({ employeeId : empId});
 
       if (personalDetails) {
         // Update existing record
@@ -45,7 +45,7 @@ router.post(
       } else {
         // Create new record
         personalDetails = new PersonalDetails({
-          employeeId:empId,
+          employeeId : empId,
           name : firstName + " " + middleName ? middleName + " " : "" + lastName,
           email,
           relationType,
@@ -70,18 +70,7 @@ router.post(
 router.post(
   "/communicationDetails",
   [
-    body("presentHouse").notEmpty().withMessage("Present House is required"),
-    body("presentCity").notEmpty().withMessage("Present City is required"),
-    body("presentCountry").notEmpty().withMessage("Present Country is required"),
-    body("presentState").notEmpty().withMessage("Present State is required"),
-    body("presentDistrict").notEmpty().withMessage("Present District is required"),
-    body("presentPinCode").notEmpty().withMessage("Present Pin Code is required"),
-    body("permanentHouse").notEmpty().withMessage("Permanent House is required"),
-    body("permanentCity").notEmpty().withMessage("Permanent City is required"),
-    body("permanentCountry").notEmpty().withMessage("Permanent Country is required"),
-    body("permanentState").notEmpty().withMessage("Permanent State is required"),
-    body("permanentDistrict").notEmpty().withMessage("Permanent District is required"),
-    body("permanentPinCode").notEmpty().withMessage("Permanent Pin Code is required")
+    
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -106,7 +95,7 @@ router.post(
     } = req.body;
 
     try {
-      let communicationDetails = await CommunicationDetails.findOne({ employeeId });
+      let communicationDetails = await CommunicationDetails.findOne({ employeeId : empId});
 
       if (communicationDetails) {
         // Update existing record
@@ -153,9 +142,7 @@ router.post(
 router.post(
   "/otherDetails",
   [
-    body("addressProof").notEmpty().withMessage("Address Proof is required"),
-    body("identityProof").notEmpty().withMessage("Identity Proof is required"),
-    body("offerLetter").notEmpty().withMessage("Offer Letter is required")
+    
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -174,7 +161,7 @@ router.post(
     } = req.body;
 
     try {
-      let otherDetails = await OtherDetails.findOne({ employeeId });
+      let otherDetails = await OtherDetails.findOne({ employeeId : empId});
 
       if (otherDetails) {
         // Update existing record

@@ -10,7 +10,7 @@ router.get("/",(req,res)=>{
 })
 
 router.use('/auth',AuthRoute);
-router.use('/empdetails',EmployeeRoute);
+router.use('/empDetails',EmployeeRoute);
 router.use('/application',ApplicationRoute);
 
 

@@ -7,6 +7,8 @@ import axios from 'axios'
 import "./index.css";
 import "./login.css";
 import { CgPassword } from "react-icons/cg";
+import { useDispatch } from "react-redux";
+import { login, logout } from "./Feature/Userslice";
 // import './RegisterForm.css';
 
 const Registration = () => {
@@ -14,8 +16,9 @@ const Registration = () => {
   const [toggle, settoggle] = useState(0);
   const [step, setStep] = useState(0);
   const [employeeId, setEmployeeId] = useState('');
-  const [empId, setEmpId] = useState('');
   const [username, setUsername] = useState('');
+  const [lusername, setLusername] = useState('');
+  const [lpassword, setLpassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,13 +32,15 @@ const Registration = () => {
     } else {
       setErrorMessage('');
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/register', { username, employeeId, password: newPassword });
+        const response = await axios.post('http://l+ocalhost:5000/api/auth/register', { username, employeeId, password: newPassword });
         console.log(response.data);
         if(response.data.errors){
           setErrors1(response.data.errors);
         }else{
           alert(response.data.message);
-          setEmpId(response.data.empId);
+          setFormData1({empId: response.data.empId});
+          setFormData2({empId: response.data.empId});
+          setFormData3({empId: response.data.empId});
           settoggle(2);
         }
       } catch (error) {
@@ -45,7 +50,7 @@ const Registration = () => {
   };
 
   const [formData1, setFormData1] = useState({
-    empId,
+    empId: '',
     firstName: '',
     middleName: '',
     lastName: '',
@@ -59,7 +64,7 @@ const Registration = () => {
     signature: null
   })
   const [formData2, setFormData2] = useState({
-    empId,
+    empId: '',
     presentHouseNo: '',
     presentLocality: '',
     presentCountry: '',
@@ -74,7 +79,7 @@ const Registration = () => {
     permanentPincode: ''
   })
   const [formData3, setFormData3] = useState({
-    empId,
+    empId: '',
     addressProof: null,
     identityProof: null,
     physicallyChallenged: null,
@@ -130,11 +135,14 @@ const Registration = () => {
     e.preventDefault();
     // Validate formData and set errors
     // Submit formData
+    alert("Your profile data successfully submitted")
+    navigate("/");
   };
 
   const handleNext1 = async () => {
     if (validateForm()) {
       try {
+        console.log(`formData.empId: ${formData1.empId}`);
         const response = await axios.post('http://localhost:5000/api/empDetails/personalDetails', formData1);
         console.log(response.data);
         if(response.data.errors){
@@ -203,34 +211,42 @@ const Registration = () => {
     setErrors(currentErrors);
     return isValid;
   };
- 
-  const handleCreateAccount= async(e)=>{
-    e.preventDefault();
-    const url="http://localhost:5000/api/auth/register"
-
-    if(newPassword===confirmPassword){
-      axios.post(url,{
-        name:username,
-        password:newPassword
-    })
-    }
-    else{
-      setErrorMessage('password do not match')
-    }
-
-    
-  }
+ const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loginRole != 'admin') {
+      try {
+        const response = await axios.post('http://localhost:5000/api/auth/login', {loginRole, username: lusername, password: lpassword});
+        console.log(response.data);
+        if(response.data.errors){
+          setErrors1(response.data.errors);
+          console.log(errors1);
+        }else{
+          alert(response.data.message);
+          console.log(response.data.user);
+          dispatch(
+            login({
+              username: response.data.user.username,
+              employeeId: response.data.user.employeeId,
+              docId: response.data.user._id,
+              isAdmin: response.data.user.isAdmin,
+              allowances: response.data.user.allowances,
+            })
+          );
+          if (loginRole === 'admin') {
       
-      navigate("/admin/homePage");
-    } else {
+            navigate("/admin/homePage");
+          } else {
+            
+            navigate("/user/homePage");
+          }
+        }
+      } catch (error) {
+        console.error("Error during login: ", error);
+        alert(error.message);
+      }
       
-      navigate("/user/homePage");
-    }
   };
 
   return (
@@ -248,8 +264,8 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='loginRole'>Login as:</label>
                   <div className='input-box'>
-                    <select id='loginRole' className='dropdown' required>
-
+                    <select id='loginRole' className='dropdown' onChange={(e) => setLoginRole(e.target.value)} required>
+                      <option value=''>Select your role</option>
                       <option value='admin'>Admin</option>
                       <option value='employee'>Employee</option>
                     </select>
@@ -260,7 +276,7 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='username'>Username:</label>
                   <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter your username' value={username} onChange={(e) => setUsername(e.target.value)} autocomplete="off" required />
+                    <input type='text' id='username' placeholder='Enter your username' value={lusername} onChange={(e) => setLusername(e.target.value)} autocomplete="off" required />
                     <FaUser className='icon' />
                   </div>
                 </div>
@@ -269,7 +285,7 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='password'>Password:</label>
                   <div className='input-box'>
-                    <input type='password' id='password' placeholder='Enter your password' required />
+                    <input type='password' id='password' value={lpassword} onChange={(e) => setLpassword(e.target.value)} placeholder='Enter your password' required />
                     <FaLock className='icon' />
                   </div>
                 </div>
@@ -352,7 +368,7 @@ const Registration = () => {
                 </div>
 
                 {/* Create Account Button */}
-                <button type='submit' className='btn btn-primary' onClick={handleCreateAccount}>Create Account</button>
+                <button type='submit' className='btn btn-primary' onClick={handleRegistor}>Create Account</button>
 
                 {/* Additional Login Option */}
                 

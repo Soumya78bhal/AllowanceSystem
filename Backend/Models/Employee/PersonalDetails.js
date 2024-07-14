@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Employee = require('./Employee');
 const personalDetailsSchema = new mongoose.Schema({
     employeeId: {
         type: mongoose.Schema.Types.ObjectId,
