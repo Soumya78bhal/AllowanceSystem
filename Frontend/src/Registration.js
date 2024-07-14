@@ -13,25 +13,39 @@ const Registration = () => {
   
   const [toggle, settoggle] = useState(0);
   const [step, setStep] = useState(0);
-  const [username,setUsername]=useState('');
+  const [employeeId, setEmployeeId] = useState('');
+  const [empId, setEmpId] = useState('');
+  const [username, setUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loginRole, setLoginRole] = useState('employee');
+  const [errors1, setErrors1] = useState([]);
 
-  const handleRegistor = (event) => {
+  const handleRegistor = async (event) => {
     event.preventDefault();
     if (newPassword !== confirmPassword) {
       setErrorMessage('Passwords do not match');
     } else {
       setErrorMessage('');
-      // Proceed with form submission
-      console.log('Form submitted');
+      try {
+        const response = await axios.post('http://localhost:5000/api/auth/register', { username, employeeId, password: newPassword });
+        console.log(response.data);
+        if(response.data.errors){
+          setErrors1(response.data.errors);
+        }else{
+          alert(response.data.message);
+          setEmpId(response.data.empId);
+          settoggle(2);
+        }
+      } catch (error) {
+        console.error("Error during signup: ", error);
+      }
     }
   };
 
-  const [formData, setFormData] = useState({
-    employeeId: '',
+  const [formData1, setFormData1] = useState({
+    empId,
     firstName: '',
     middleName: '',
     lastName: '',
@@ -42,7 +56,10 @@ const Registration = () => {
     dob: '',
     maritalStatus: '',
     photograph: null,
-    signature: null,
+    signature: null
+  })
+  const [formData2, setFormData2] = useState({
+    empId,
     presentHouseNo: '',
     presentLocality: '',
     presentCountry: '',
@@ -54,7 +71,10 @@ const Registration = () => {
     permanentCountry: '',
     permanentState: '',
     permanentDistrict: '',
-    permanentPincode: '',
+    permanentPincode: ''
+  })
+  const [formData3, setFormData3] = useState({
+    empId,
     addressProof: null,
     identityProof: null,
     physicallyChallenged: null,
@@ -69,16 +89,32 @@ const Registration = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData1({
+      ...formData1,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+    setFormData2({
+      ...formData2,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+    setFormData3({
+      ...formData3,
       [name]: type === 'checkbox' ? checked : value,
     });
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setFormData({
-      ...formData,
+    setFormData1({
+      ...formData1,
+      [name]: files[0],
+    });
+    setFormData2({
+      ...formData2,
+      [name]: files[0],
+    });
+    setFormData3({
+      ...formData3,
       [name]: files[0],
     });
   };
@@ -96,9 +132,55 @@ const Registration = () => {
     // Submit formData
   };
 
-  const handleNext = () => {
+  const handleNext1 = async () => {
     if (validateForm()) {
-      setStep(step + 1);
+      try {
+        const response = await axios.post('http://localhost:5000/api/empDetails/personalDetails', formData1);
+        console.log(response.data);
+        if(response.data.errors){
+          setErrors1(response.data.errors);
+        }else{
+          alert(response.data.message);
+          setStep(step + 1);
+        }
+      } catch (error) {
+        console.error("Error during signup: ", error);
+      }
+      
+    }
+  };
+  const handleNext2 = async () => {
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://localhost:5000/api/empDetails/communicationDetails', formData2);
+        console.log(response.data);
+        if(response.data.errors){
+          setErrors1(response.data.errors);
+        }else{
+          alert(response.data.message);
+          setStep(step + 1);
+        }
+      } catch (error) {
+        console.error("Error during signup: ", error);
+      }
+      
+    }
+  };
+  const handleNext3 = async () => {
+    if (validateForm()) {
+      try {
+        const response = await axios.post('http://localhost:5000/api/empDetails/otherDetails', formData3);
+        console.log(response.data);
+        if(response.data.errors){
+          setErrors1(response.data.errors);
+        }else{
+          alert(response.data.message);
+          setStep(step + 1);
+        }
+      } catch (error) {
+        console.error("Error during signup: ", error);
+      }
+      
     }
   };
 
@@ -178,7 +260,7 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='username'>Username:</label>
                   <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter your username' autocomplete="off" required />
+                    <input type='text' id='username' placeholder='Enter your username' value={username} onChange={(e) => setUsername(e.target.value)} autocomplete="off" required />
                     <FaUser className='icon' />
                   </div>
                 </div>
@@ -223,7 +305,7 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='loginRole'>Employee ID</label>
                   <div className='input-box'>
-                    <input type='text' id='loginRole' placeholder='Enter your Employee ID' required />
+                    <input type='text' id='loginRole' placeholder='Enter your Employee ID' value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required />
                   </div>
                 </div>
 
@@ -231,9 +313,7 @@ const Registration = () => {
                 <div className='form-group'>
                   <label htmlFor='username'>Username:</label>
                   <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter a username' required on onChange={(e)=>{
-                      setUsername(e.target.value)
-                    }}/>
+                    <input type='text' id='username' placeholder='Enter a username' value={username} onChange={(e) => setUsername(e.target.value)} required />
                     <FaUser className='icon' />
                   </div>
                 </div>
@@ -278,7 +358,7 @@ const Registration = () => {
                 
                 <div className='register-link'>
                   <p>
-                  If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(0)}>Login</a>
+                  If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(2)}>Login</a>
                   </p>
                 </div>
               </form>
@@ -327,8 +407,8 @@ const Registration = () => {
                                   type="text"
                                   name="employeeId"
                                   placeholder="Employee ID"
-                                  value={formData.employeeId}
-                                  onChange={handleChange}
+                                  value={employeeId}
+                                  onChange={(e) => setEmployeeId(e.target.value)}
                                 />
                                 {errors.employeeId && <span className="error">{errors.employeeId}</span>}
                               </div>
@@ -338,7 +418,7 @@ const Registration = () => {
                                   type="text"
                                   name="firstName"
                                   placeholder="First Name"
-                                  value={formData.firstName}
+                                  value={formData1.firstName}
                                   onChange={handleChange}
                                 />
                                 {errors.firstName && <span className="error">{errors.firstName}</span>}
@@ -349,7 +429,7 @@ const Registration = () => {
                                   type="text"
                                   name="middleName"
                                   placeholder="Middle Name"
-                                  value={formData.middleName}
+                                  value={formData1.middleName}
                                   onChange={handleChange}
                                 />
                                 {errors.middleName && <span className="error">{errors.middleName}</span>}
@@ -360,7 +440,7 @@ const Registration = () => {
                                   type="text"
                                   name="lastName"
                                   placeholder="Last Name"
-                                  value={formData.lastName}
+                                  value={formData1.lastName}
                                   onChange={handleChange}
                                 />
                                 {errors.lastName && <span className="error">{errors.lastName}</span>}
@@ -369,7 +449,7 @@ const Registration = () => {
                                 <label className="field-label">Gender</label>
                                 <select
                                   name="gender"
-                                  value={formData.gender}
+                                  value={formData1.gender}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select Gender</option>
@@ -385,7 +465,7 @@ const Registration = () => {
                                   type="email"
                                   name="email"
                                   placeholder="Email"
-                                  value={formData.email}
+                                  value={formData1.email}
                                   onChange={handleChange}
                                 />
                                 {errors.email && <span className="error">{errors.email}</span>}
@@ -396,7 +476,7 @@ const Registration = () => {
                                 <label className="field-label">Relation Type</label>
                                 <select
                                   name="relationType"
-                                  value={formData.relationType}
+                                  value={formData1.relationType}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select Relation</option>
@@ -412,7 +492,7 @@ const Registration = () => {
                                   type="text"
                                   name="relationName"
                                   placeholder="Relation Name"
-                                  value={formData.relationName}
+                                  value={formData1.relationName}
                                   onChange={handleChange}
                                 />
                                 {errors.relationName && <span className="error">{errors.relationName}</span>}
@@ -422,7 +502,7 @@ const Registration = () => {
                                 <input
                                   type="date"
                                   name="dob"
-                                  value={formData.dob}
+                                  value={formData1.dob}
                                   onChange={handleChange}
                                 />
                                 {errors.dob && <span className="error">{errors.dob}</span>}
@@ -431,7 +511,7 @@ const Registration = () => {
                                 <label className="field-label">Marital Status</label>
                                 <select
                                   name="maritalStatus"
-                                  value={formData.maritalStatus}
+                                  value={formData1.maritalStatus}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select Status</option>
@@ -445,7 +525,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="photograph"
-                                  value={formData.photograph}
+                                  value={formData1.photograph}
                                   onChange={handleChange}
                                 />
                                 {errors.photograph && <span className="error">{errors.photograph}</span>}
@@ -455,7 +535,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="signature"
-                                  value={formData.signature}
+                                  value={formData1.signature}
                                   onChange={handleChange}
                                 />
                                 {errors.signature && <span className="error">{errors.signature}</span>}
@@ -467,7 +547,7 @@ const Registration = () => {
                             name="next"
                             className="next action-button"
                             value="Next"
-                            onClick={handleNext}
+                            onClick={handleNext1}
                           />
                         </fieldset>
 
@@ -481,7 +561,7 @@ const Registration = () => {
                                   type="text"
                                   name="presentHouseNo"
                                   placeholder="House No."
-                                  value={formData.presentHouseNo}
+                                  value={formData2.presentHouseNo}
                                   onChange={handleChange}
                                 />
                                 {errors.presentHouseNo && <span className="error">{errors.presentHouseNo}</span>}
@@ -493,7 +573,7 @@ const Registration = () => {
                                   type="text"
                                   name="presentLocality"
                                   placeholder="City"
-                                  value={formData.presentLocality}
+                                  value={formData2.presentLocality}
                                   onChange={handleChange}
                                 />
                                 {errors.presentLocality && <span className="error">{errors.presentLocality}</span>}
@@ -502,7 +582,7 @@ const Registration = () => {
                                 <label className="field-label">Present Country</label>
                                 <select
                                   name="presentCountry"
-                                  value={formData.presentCountry}
+                                  value={formData2.presentCountry}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select Country</option>
@@ -514,7 +594,7 @@ const Registration = () => {
                                 <label className="field-label">Present State</label>
                                 <select
                                   name="presentState"
-                                  value={formData.presentState}
+                                  value={formData2.presentState}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select State</option>
@@ -527,7 +607,7 @@ const Registration = () => {
                                 <label className="field-label">Present District</label>
                                 <select
                                   name="presentDistrict"
-                                  value={formData.presentDistrict}
+                                  value={formData2.presentDistrict}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select District</option>
@@ -541,7 +621,7 @@ const Registration = () => {
                                   type="text"
                                   name="presentPincode"
                                   placeholder="Pincode"
-                                  value={formData.presentPincode}
+                                  value={formData2.presentPincode}
                                   onChange={handleChange}
                                 />
                                 {errors.presentPincode && <span className="error">{errors.presentPincode}</span>}
@@ -554,7 +634,7 @@ const Registration = () => {
                                   type="text"
                                   name="permanentHouseNo"
                                   placeholder="House No."
-                                  value={formData.permanentHouseNo}
+                                  value={formData2.permanentHouseNo}
                                   onChange={handleChange}
                                 />
                                 {errors.permanentHouseNo && <span className="error">{errors.permanentHouseNo}</span>}
@@ -566,7 +646,7 @@ const Registration = () => {
                                   type="text"
                                   name="permanentLocality"
                                   placeholder="City"
-                                  value={formData.permanentLocality}
+                                  value={formData2.permanentLocality}
                                   onChange={handleChange}
                                 />
                                 {errors.permanentLocality && <span className="error">{errors.permanentLocality}</span>}
@@ -575,7 +655,7 @@ const Registration = () => {
                                 <label className="field-label">Permanent Country</label>
                                 <select
                                   name="permanentCountry"
-                                  value={formData.permanentCountry}
+                                  value={formData2.permanentCountry}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select Country</option>
@@ -587,7 +667,7 @@ const Registration = () => {
                                 <label className="field-label">Permanent State</label>
                                 <select
                                   name="permanentState"
-                                  value={formData.permanentState}
+                                  value={formData2.permanentState}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select State</option>
@@ -599,7 +679,7 @@ const Registration = () => {
                                 <label className="field-label">Permanent District</label>
                                 <select
                                   name="permanentDistrict"
-                                  value={formData.permanentDistrict}
+                                  value={formData2.permanentDistrict}
                                   onChange={handleChange}
                                 >
                                   <option value="">Select District</option>
@@ -613,7 +693,7 @@ const Registration = () => {
                                   type="text"
                                   name="permanentPincode"
                                   placeholder="Pincode"
-                                  value={formData.permanentPincode}
+                                  value={formData2.permanentPincode}
                                   onChange={handleChange}
                                 />
                                 {errors.permanentPincode && <span className="error">{errors.permanentPincode}</span>}
@@ -632,7 +712,7 @@ const Registration = () => {
                             name="next"
                             className="next action-button"
                             value="Next"
-                            onClick={handleNext}
+                            onClick={handleNext2}
                           />
                         </fieldset>
 
@@ -645,6 +725,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="addressProof"
+                                  value={formData3.addressProof}
                                   onChange={handleFileChange}
                                 />
                                 {errors.addressProof && <span className="error">{errors.addressProof}</span>}
@@ -654,6 +735,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="identityProof"
+                                  value={formData3.identityProof}
                                   onChange={handleFileChange}
                                 />
                                 {errors.identityProof && <span className="error">{errors.identityProof}</span>}
@@ -665,6 +747,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="physicallyChallenged"
+                                  value={formData3.physicallyChallenged}
                                   onChange={handleFileChange}
                                 />
                                 {errors.physicallyChallenged && <span className="error">{errors.physicallyChallenged}</span>}
@@ -674,6 +757,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="exSoldier"
+                                  value={formData3.exSoldier}
                                   onChange={handleFileChange}
                                 />
                                 {errors.exSoldier && <span className="error">{errors.exSoldier}</span>}
@@ -684,6 +768,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="pancard"
+                                  value={formData3.pancard}
                                   onChange={handleFileChange}
                                 />
                                 {errors.pancard && <span className="error">{errors.pancard}</span>}
@@ -694,6 +779,7 @@ const Registration = () => {
                                 <input
                                   type="file"
                                   name="offerLetter"
+                                  value={formData3.offerLetter}
                                   onChange={handleFileChange}
                                 />
                                 {errors.offerLetter && <span className="error">{errors.offerLetter}</span>}
@@ -713,7 +799,7 @@ const Registration = () => {
                             name="next"
                             className="next action-button"
                             value="Next"
-                            onClick={handleNext}
+                            onClick={handleNext3}
                           />
                         </fieldset>
 
@@ -723,24 +809,24 @@ const Registration = () => {
                             <div className="review-section">
                               <h4>Personal Details</h4>
                               <p>
-                                <strong>Employee ID:</strong> {formData.employeeId}
+                                <strong>Employee ID:</strong> {employeeId}
                               </p>
                               <p>
-                                <strong>Name:</strong> {formData.firstName} {formData.middleName} {formData.lastName}
-                              </p>
-
-                              <p>
-                                <strong>Gender:</strong> {formData.gender}
-                              </p>
-                              <p>
-                                <strong>Marital Status:</strong> {formData.maritalStatus}
-                              </p>
-                              <p>
-                                <strong>Email:</strong> {formData.email}
+                                <strong>Name:</strong> {formData1.firstName} {formData1.middleName} {formData1.lastName}
                               </p>
 
                               <p>
-                                <strong>Date of Birth:</strong> {formData.dob}
+                                <strong>Gender:</strong> {formData1.gender}
+                              </p>
+                              <p>
+                                <strong>Marital Status:</strong> {formData1.maritalStatus}
+                              </p>
+                              <p>
+                                <strong>Email:</strong> {formData1.email}
+                              </p>
+
+                              <p>
+                                <strong>Date of Birth:</strong> {formData1.dob}
                               </p>
 
 
@@ -749,11 +835,11 @@ const Registration = () => {
                               <p>
                                 <strong>Present Address:</strong>
 
-                                {`${formData.presentLocality}, ${formData.presentDistrict}, ${formData.presentState}`}
+                                {`${formData2.presentLocality}, ${formData2.presentDistrict}, ${formData2.presentState}`}
                               </p>
                               <p>
                                 <strong>Permanent Address:</strong>
-                                {`${formData.permanentLocality}, ${formData.permanentDistrict}, ${formData.permanentState}`}
+                                {`${formData2.permanentLocality}, ${formData2.permanentDistrict}, ${formData2.permanentState}`}
                               </p>
                             </div>
 
