@@ -111,12 +111,19 @@ const DashBoad = () => {
                                         </tr>
                                       
                                             {selectedEmployee.selectedAllowanceTypes.map((item)=>(
+                                                <>
                                             <tr>
                                             <th>Allowance Type</th>
                                             <td>{item.type}</td>
+                                           
+                                            </tr>
+                                            <tr>
+                                            
                                             <th>Amount</th>
                                             <td>{item.amount}</td>
                                             </tr>
+                                            </>
+                                            
                                             ))}
                                         <tr>
                                             <th>Status</th>
