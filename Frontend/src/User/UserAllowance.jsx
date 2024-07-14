@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 const UserAllowance = () => {
     const [fetchData,setFetchData]=useState(0);
+    const [file,setfile]=useState('');
     const [formData, setFormData] = useState({
         employeeName: '',
         employeeId: '',
@@ -49,7 +50,7 @@ const UserAllowance = () => {
         const files = Array.from(e.target.files);
         setFormData((prevState) => ({
             ...prevState,
-            files: files
+            files: file
         }));
     };
 
@@ -110,7 +111,7 @@ const UserAllowance = () => {
         axios.post(url,{
             ...formData,
             employee: id,
-            files:"faskjhfsda"
+            files:file
         }).then((res)=>{
             
             toast(res.data.message)
@@ -123,7 +124,7 @@ const UserAllowance = () => {
             customAllowanceType: '',
             selectedAllowanceTypes: [],
             date: '',
-            files: []
+
         });
         setFetchData((prev)=>{
             return prev+1;
@@ -227,13 +228,13 @@ const UserAllowance = () => {
 
                 <label htmlFor="fileUpload">Upload Documents (PDF, JPG, JPEG, PNG):</label>
                 <input
-                    type="file"
-                    id="fileUpload"
-                    name="fileUpload"
-                    accept=".pdf, .jpg, .jpeg, .png"
-                    onChange={handleFileChange}
-                    multiple
-                />
+                                        type="text"
+                                        name="Remark"
+                                        placeholder="Upload file Link"
+                                        style={{width:"100%",height:"60px", margin:"20px 0px 20px 0px", borderRadius:"7px", padding:"10px"}}
+                                        value={file}
+                                        onChange={(e)=>{setfile(e.target.value)}}
+                                    />
                 <br/>
                 <div className='submit-div'><button type="submit">Submit</button></div>
             </form>

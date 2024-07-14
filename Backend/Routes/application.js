@@ -119,7 +119,6 @@ router.post('/postApplication',async (req,res)=>{
 router.post('/updateApplication',async (req,res)=>{
     const id=req.body._id;
         try{
-            console.log(req.body.remark)
             await Application.findOneAndUpdate({_id:id},
                 {
                     status:req.body.status,

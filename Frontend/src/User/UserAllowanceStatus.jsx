@@ -4,43 +4,7 @@ import './UserAllowanceStatus.css';
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 
-const data = [
-    {
-      Employee_ID: "E001",
-      Employee_Name: "John Doe",
-      Allowance_No: "001",
-      Allowance_Type: "Travel",
-      Apply_Date: "2024-07-10",
-      Amount: 150,
-      Description: "Business trip to NYC",
-      Status: "Approved"
-    },
-    {
-      Employee_ID: "E002",
-      Employee_Name: "Jane Smith",
-      Allowance_No: "002",
-      Allowance_Type: "Food",
-      Apply_Date: "2024-07-11",
-      Amount: 50,
-      Description: "Client meeting lunch",
-      Status: "Pending"
-    },
-    {
-      Employee_ID: "E003",
-      Employee_Name: "Sam Brown",
-      Allowance_No: "003",
-      Allowance_Type: "Accommodation",
-      Apply_Date: "2024-07-12",
-      Amount: 300,
-      Description: "Hotel stay for conference",
-      Status: "Rejected"
-    }
-  ];
-
-
 const id="6692b303bfe18fc580fae4db";
-
-
 
 const UserAllowanceSataus = () => {
     const [toggle, setToggle] = useState(0);
