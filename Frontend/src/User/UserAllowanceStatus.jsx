@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './UserAllowanceStatus.css';
 import { FaArrowLeft } from "react-icons/fa";
-
+import axios from "axios";
 
 const data = [
     {
@@ -38,16 +38,28 @@ const data = [
   ];
 
 
+const id="6692b303bfe18fc580fae4db";
+
+
 
 const UserAllowanceSataus = () => {
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-
+    const [data1,setData]=useState(null);
     const handleUpdatePlan = (employee) => {
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
-
+    useEffect(()=>{
+        const fetchData=async ()=>{
+            await axios.get(`http://localhost:5000/api/application/userApplications/${id}`).then((res)=>[
+                setData(res.data)
+            ])
+            
+            console.log(data1)
+        }
+        fetchData();
+    },[toggle])
     return (
         <>
             <main className="UserAllowance">
@@ -61,7 +73,7 @@ const UserAllowanceSataus = () => {
                                     <thead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 1 }}>
                                         <tr>
                                             <th scope="col">Sl no.</th>
-                                            <th scope="col">Allowance Number</th>
+                                            
                                             <th scope="col">Allowance Type</th>
                                             <th scope="col">Apply Date</th>
                                             <th scope="col">Status</th>
@@ -69,13 +81,12 @@ const UserAllowanceSataus = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, index) => (
+                                        { data1 && data1.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td>{item.Allowance_No}</td>
-                                                <td>{item.Allowance_Type}</td>
-                                                <td>{item.Apply_Date}</td>
-                                                <td>{item.Status}</td>
+                                                <td>{item.selectedAllowanceTypes[0].type}</td>
+                                                <td>{item.date.substring(0,10)}</td>
+                                                <td>{item.status}</td>
                                                 <td>
                                                     <button
                                                         className="btn btn-warning"
@@ -107,35 +118,32 @@ const UserAllowanceSataus = () => {
                                     <tbody>
                                         <tr>
                                             <th>Employee ID</th>
-                                            <td>{selectedEmployee.Employee_ID}</td>
+                                            <td>{selectedEmployee.employeeId}</td>
                                         </tr>
                                         <tr>
                                             <th>Employee Name</th>
-                                            <td>{selectedEmployee.Employee_Name}</td>
+                                            <td>{selectedEmployee.employeeName}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Allwance Number</th>
-                                            <td>{selectedEmployee.Allowance_No}</td>
-                                        </tr>
-                                        <tr>
+                                        
+                                             {selectedEmployee.selectedAllowanceTypes.map((item)=>(
+                                            <tr>
                                             <th>Allowance Type</th>
-                                            <td>{selectedEmployee.Allowance_Type}</td>
-                                        </tr>
+                                            <td>{item.type}</td>
+                                            <th>Amount</th>
+                                            <td>{item.amount}</td>
+                                            <th>Description</th>
+                                            <td>{item.description}</td>
+                                            </tr>
+                                            ))}
+                                        
                                         <tr>
                                             <th>Apply Date</th>
-                                            <td>{selectedEmployee.Apply_Date}</td>
+                                            <td>{selectedEmployee.date.substring(0,10)}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Amount</th>
-                                            <td>{selectedEmployee.Amount}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Description</th>
-                                            <td>{selectedEmployee.Description}</td>
-                                        </tr>
+                                        
                                         <tr>
                                             <th>Status</th>
-                                            <td>{selectedEmployee.Status}</td>
+                                            <td>{selectedEmployee.status}</td>
                                         </tr>
                                     </tbody>
                                 </table>
