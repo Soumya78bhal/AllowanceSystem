@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import "./CreateUser.css";
 
+import Header from "../Header.jsx"
+import axios from "axios";
+import { useNavigate } from "react-router";
+
 
 const CreateUser = () => {
+
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
     employeeId: '',
@@ -54,12 +60,61 @@ const CreateUser = () => {
       ...formData,
       [name]: files[0],
     });
-  };
+  };  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Validate formData and set errors
     // Submit formData
+    const formDataToSend = new FormData();
+    formDataToSend.append('employeeId', formData.employeeId);
+    formDataToSend.append('firstName', formData.firstName);
+    formDataToSend.append('middleName', formData.middleName);
+    formDataToSend.append('lastName', formData.lastName);
+    formDataToSend.append('gender', formData.gender);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('relationType', formData.relationType);
+    formDataToSend.append('relationName', formData.relationName);
+    formDataToSend.append('dob', formData.dob);
+    formDataToSend.append('maritalStatus', formData.maritalStatus);
+    formDataToSend.append('photograph', formData.photograph);
+    formDataToSend.append('signature', formData.signature);
+    formDataToSend.append('presentHouseNo', formData.presentHouseNo);
+    formDataToSend.append('presentLocality', formData.presentLocality);
+    formDataToSend.append('presentCountry', formData.presentCountry);
+    formDataToSend.append('presentState', formData.presentState);
+    formDataToSend.append('presentDistrict', formData.presentDistrict);
+    formDataToSend.append('presentPincode', formData.presentPincode);
+    formDataToSend.append('permanentHouseNo', formData.permanentHouseNo);
+    formDataToSend.append('permanentLocality', formData.permanentLocality);
+    formDataToSend.append('permanentCountry', formData.permanentCountry);
+    formDataToSend.append('permanentState', formData.permanentState);
+    formDataToSend.append('permanentDistrict', formData.permanentDistrict);
+    formDataToSend.append('permanentPincode', formData.permanentPincode);
+    formDataToSend.append('addressProof', formData.addressProof);
+    formDataToSend.append('identityProof', formData.identityProof);
+    formDataToSend.append('physicallyChallenged', formData.physicallyChallenged);
+    formDataToSend.append('exSoldier', formData.exSoldier);
+    formDataToSend.append('pancard', formData.pancard);
+    formDataToSend.append('offerLetter', formData.offerLetter);
+    formDataToSend.append('isVerified', true);
+
+    try {
+        const response = await axios.post('http://localhost:5000/api/auth/register', formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if (response.status === 201) {
+            alert('User created successfully');
+            navigate('/admin/dashboad');
+        } else {
+            alert(response.data.message);
+        }
+    } catch (error) {
+        console.error('Error during signup: ', error);
+        alert('Internal server error');
+    }
   };
 
   const handleNext = () => {

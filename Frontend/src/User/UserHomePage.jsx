@@ -6,8 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 // import "./DashBoad.css";  // Import the CSS file
 import Employee from "../assets/employee.jpg"
 import '../Admin/AdminHomePage.css';
+import { useSelector } from "react-redux";
+import { selectUser } from "../Feature/Userslice.js";
 
 const AdminHomePage = () => {
+    const user = useSelector(selectUser);
     return (
         <>
             <main >
@@ -18,7 +21,7 @@ const AdminHomePage = () => {
 
                     
                     <div className="right">
-                        <h1>Welcome to User Page</h1>
+                        <h1>Welcome to User Page {user.username}</h1>
                         
                     </div>
                 </div>

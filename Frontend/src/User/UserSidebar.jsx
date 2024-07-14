@@ -3,12 +3,16 @@ import { MdLogout } from "react-icons/md";
 import Header from "../Header.jsx";
 import Footer from "../Footer.jsx";
 import "../Admin/AdminSidebar.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../Feature/Userslice";
 
 
 const UserSidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(logout());
     navigate("/login");
   };
 

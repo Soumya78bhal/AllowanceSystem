@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from "../Header.jsx";
+
 import './UserAllowance.css';
+import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
 
 const UserAllowance = () => {
+    const [fetchData,setFetchData]=useState(0);
     const [formData, setFormData] = useState({
         employeeName: '',
         employeeId: '',
@@ -12,6 +17,26 @@ const UserAllowance = () => {
         files: []
     });
 
+        useEffect(
+            ()=> {
+                async function initialData(){
+
+                    await axios.get('http://localhost:5000/api/application/userData/6692b303bfe18fc580fae4db')
+                    .then((res)=>{
+                        console.log(res)
+                        setFormData({
+                            ...formData,
+                            employeeName:res.data.username,
+                            employeeId:res.data.employeeId
+                        })
+                    })
+                }
+                //console.log(formData)
+                initialData();
+            }
+        ,[fetchData]
+        )
+  
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -77,8 +102,19 @@ const UserAllowance = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('dafsdf')
         // Handle form submission
         console.log('Form submitted:', formData);
+        const url="http://localhost:5000/api/application/postApplication"
+        const id="6692b303bfe18fc580fae4db" 
+        axios.post(url,{
+            ...formData,
+            employee: id,
+            files:"faskjhfsda"
+        }).then((res)=>{
+            
+            toast(res.data.message)
+        });
         // Reset form fields
         setFormData({
             employeeName: '',
@@ -89,6 +125,9 @@ const UserAllowance = () => {
             date: '',
             files: []
         });
+        setFetchData((prev)=>{
+            return prev+1;
+        })
     };
 
     return (
@@ -108,6 +147,7 @@ const UserAllowance = () => {
                             value={formData.employeeName}
                             onChange={handleChange}
                             required
+                            readOnly
                         />
                     </div>
                     <div className="column">
@@ -119,6 +159,7 @@ const UserAllowance = () => {
                             value={formData.employeeId}
                             onChange={handleChange}
                             required
+                            readOnly
                         />
                     </div>
                 </div>
@@ -160,6 +201,7 @@ const UserAllowance = () => {
                                     placeholder="Amount"
                                     value={allowance.amount}
                                     onChange={(e) => handleAllowanceChange(index, 'amount', e.target.value)}
+                                    required={true}
                                 />
                                 <textarea
                                     placeholder="Description"
@@ -196,6 +238,7 @@ const UserAllowance = () => {
                 <div className='submit-div'><button type="submit">Submit</button></div>
             </form>
         </div>
+        <ToastContainer/>
       </>
     );
 };
