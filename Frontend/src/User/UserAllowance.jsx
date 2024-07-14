@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Header from "../Header.jsx";
 import './UserAllowance.css';
 import axios from 'axios';
-
+import { ToastContainer, toast } from "react-toastify";
 
 const UserAllowance = () => {
+    const [fetchData,setFetchData]=useState(0);
     const [formData, setFormData] = useState({
         employeeName: '',
         employeeId: '',
@@ -33,7 +34,7 @@ const UserAllowance = () => {
                 //console.log(formData)
                 initialData();
             }
-        ,[]
+        ,[fetchData]
         )
   
     const handleChange = (e) => {
@@ -110,6 +111,9 @@ const UserAllowance = () => {
             ...formData,
             employee: id,
             files:"faskjhfsda"
+        }).then((res)=>{
+            
+            toast(res.data.message)
         });
         // Reset form fields
         setFormData({
@@ -121,6 +125,9 @@ const UserAllowance = () => {
             date: '',
             files: []
         });
+        setFetchData((prev)=>{
+            return prev+1;
+        })
     };
 
     return (
@@ -232,6 +239,7 @@ const UserAllowance = () => {
                 <div className='submit-div'><button type="submit">Submit</button></div>
             </form>
         </div>
+        <ToastContainer/>
       </>
     );
 };

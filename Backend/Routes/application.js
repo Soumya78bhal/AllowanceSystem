@@ -100,12 +100,18 @@ router.get('/userData/:id',async(req,res)=>{
 
 //Save Applications
 router.post('/postApplication',async (req,res)=>{
-    console.log(req.body);
+    try{
 
-    const data=new Application({
-        ...req.body
-    });
-    await data.save();
+        const data=new Application({
+            ...req.body
+        });
+        await data.save();
+        res.status(200).send({message:"Saved Successfully"})
+    }catch(e){
+        console.log(e);
+        res.send("Error");
+    }
+    
 })
 
 //update status of a application
