@@ -24,7 +24,6 @@ const DashBoad = () => {
         const getData=async ()=>{
         await axios.get(url).then((res=>{
             setData(res.data);
-            console.log(data1)
         }))
     }
     getData();
