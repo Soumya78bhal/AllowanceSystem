@@ -2,7 +2,8 @@ const express = require('express');
 const Application = require('../Models/Application'); // Adjust the path as necessary
 const Employee = require('../Models/Employee/Employee'); // Ensure Employee model is also imported
 const router = express.Router();
-const {ObjectId}=require('mongodb')
+const {ObjectId}=require('mongodb');
+const { set } = require('mongoose');
 
 // POST /applications - Create a new application
 router.post('/register', async (req, res) => {
@@ -105,5 +106,23 @@ router.post('/postApplication',async (req,res)=>{
         ...req.body
     });
     await data.save();
+})
+
+//update status of a application
+
+router.post('/updateApplication',async (req,res)=>{
+    const id=req.body._id;
+        try{
+
+            await Application.findOneAndUpdate({_id:id},
+                {
+                    status:req.body.status
+                }
+            )
+
+            res.send(true)
+        }catch(e){
+            res.send(e)
+        }
 })
 module.exports = router;
