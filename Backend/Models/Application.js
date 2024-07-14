@@ -46,6 +46,9 @@ const applicationSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  remark:{
+    type:String
+  },
   files: [{
     type: String // Assuming you store file paths or URLs
   }]

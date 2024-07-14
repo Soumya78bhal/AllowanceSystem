@@ -14,7 +14,7 @@ const UserAllowance = () => {
         customAllowanceType: '',
         selectedAllowanceTypes: [],
         date: '',
-        files: []
+        files: [],
     });
 
         useEffect(

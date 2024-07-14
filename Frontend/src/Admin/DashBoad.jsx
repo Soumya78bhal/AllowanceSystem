@@ -11,6 +11,7 @@ const DashBoad = () => {
     const [data1,setData]=useState('');
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [remark,setRemark]=useState('');
 
     const handleUpdatePlan = (employee) => {    
         setSelectedEmployee(employee);
@@ -31,7 +32,8 @@ const DashBoad = () => {
     const handleAction = (action) => {
         axios.post('http://localhost:5000/api/application/updateApplication',{
             _id:selectedEmployee._id,
-            status:action
+            status:action,
+            remark:remark
         }).then((res)=>{
             if(res.data){
                 toast(`Employee has been ${action}`);
@@ -132,8 +134,20 @@ const DashBoad = () => {
                                             }
                                             </td>
                                         </tr>
+                                        <tr>
+
+                                        </tr>
                                     </tbody>
+                                    
                                 </table>
+                                <input
+                                        type="text"
+                                        name="Remark"
+                                        placeholder="Remarks"
+                                        style={{width:"100%",height:"60px", margin:"20px 0px 20px 0px", borderRadius:"7px", padding:"10px"}}
+                                        value={remark}
+                                        onChange={(e)=>{setRemark(e.target.value)}}
+                                    />
                                 <br />
                                 <button className="btn btn-success Detail_buttom" onClick={() => handleAction('Accepted')}>
                                     Approve

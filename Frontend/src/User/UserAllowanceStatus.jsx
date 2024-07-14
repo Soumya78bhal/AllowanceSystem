@@ -145,6 +145,10 @@ const UserAllowanceSataus = () => {
                                             <th>Status</th>
                                             <td>{selectedEmployee.status}</td>
                                         </tr>
+                                        <tr>
+                                            <th>Remark</th>
+                                            <td>{selectedEmployee.remark}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
