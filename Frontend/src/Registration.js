@@ -258,7 +258,7 @@ const Registration = () => {
   return (
     <>
     <Header />
-      <mian>
+      <main>
         {toggle === 0 && (
           <>
             <div className="Login">
@@ -281,6 +281,7 @@ const Registration = () => {
                       <option value='employee'>Employee</option>
                     </select>
                   </div>
+                  </div>
 
 
                 {/* Username */}
@@ -290,7 +291,7 @@ const Registration = () => {
                     <input type='text' id='username' placeholder='Enter your username' value={lusername} onChange={(e) => setLusername(e.target.value)} autocomplete="off" required />
                     <FaUser className='icon' />
                   </div>
-
+                  </div>
 
                 {/* Password */}
                 <div className='form-group'>
@@ -299,7 +300,7 @@ const Registration = () => {
                     <input type='password' id='password' value={lpassword} onChange={(e) => setLpassword(e.target.value)} placeholder='Enter your password' required />
                     <FaLock className='icon' />
                   </div>
-
+                  </div>
                   {/* Login Button */}
                   <button type='submit'>Login</button>
 
@@ -309,7 +310,9 @@ const Registration = () => {
                       Don't have an account? <a className="btn btn-outline-danger" onClick={() => settoggle(1)}>Register</a>
                     </p>
                   </div>
+                  
                 </form>
+                
               </div>
             </div>
 
@@ -331,7 +334,7 @@ const Registration = () => {
                   <div className='input-box'>
                     <input type='text' id='loginRole' placeholder='Enter your Employee ID' value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required />
                   </div>
-
+                  </div>
                 {/* Username */}
                 <div className='form-group'>
                   <label htmlFor='username'>Username:</label>
@@ -339,7 +342,7 @@ const Registration = () => {
                     <input type='text' id='username' placeholder='Enter a username' value={username} onChange={(e) => setUsername(e.target.value)} required />
                     <FaUser className='icon' />
                   </div>
-
+                  </div>
                   {/* New Password */}
                   <div className='form-group'>
                     <label htmlFor='newPassword'>New Password:</label>
@@ -888,12 +891,12 @@ const Registration = () => {
                 </div>
               </div>
             </div>
-
+          </div>
           </>
         )}
-      </mian >
+      </main>
     </>
-  );
+  )
 };
 
 export default Registration;
