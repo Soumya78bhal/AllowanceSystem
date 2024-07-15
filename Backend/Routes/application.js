@@ -2,12 +2,26 @@ const express = require('express');
 const Application = require('../Models/Application'); // Adjust the path as necessary
 const Employee = require('../Models/Employee/Employee'); // Ensure Employee model is also imported
 const router = express.Router();
-const {ObjectId}=require('mongodb');
-const { set } = require('mongoose');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
-router.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const uploadsDir = path.resolve(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadsDir);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
 // POST /applications - Create a new application
 router.post('/register', async (req, res) => {
     const { employee, allowanceType, startDate, endDate, status, bill } = req.body;
@@ -102,20 +116,27 @@ router.get('/userData/:id',async(req,res)=>{
 })
 
 //Save Applications
-router.post('/postApplication',async (req,res)=>{
-    try{
-        
-        const data=new Application({
-            ...req.body,
+router.post('/postApplication', upload.single('file'), async (req, res) => {
+    try {
+        const { body, file } = req;
+        if (!file) {
+            console.log('File not uploaded');
+            return res.status(400).send({ message: "File not uploaded" });
+        }
+        if (body.selectedAllowanceTypes) {
+            body.selectedAllowanceTypes = JSON.parse(body.selectedAllowanceTypes);
+        }
+        const data = new Application({
+            ...body,
+            file: file.filename, // Save the file path to the database
         });
         await data.save();
-        res.status(200).send({message:"Saved Successfully"})
-    }catch(e){
-        console.log(e);
-        res.send("Error");
+        res.status(200).send({ message: "Saved Successfully" });
+    } catch (e) {
+        console.log(e.message);
+        res.status(500).send("Error");
     }
-    
-})
+});
 
 //update status of a application
 
@@ -134,4 +155,17 @@ router.post('/updateApplication',async (req,res)=>{
             res.send(e)
         }
 })
+
+
+router.get('/download/:filename', (req, res) => {
+    const filename = req.params.filename;
+    const filePath = path.join(__dirname, '..', 'uploads', filename); // Adjust the path accordingly
+
+    res.download(filePath, filename, (err) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error downloading file");
+        }
+    });
+});
 module.exports = router;

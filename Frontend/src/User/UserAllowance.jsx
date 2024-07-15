@@ -15,7 +15,7 @@ const UserAllowance = () => {
     customAllowanceType: "",
     selectedAllowanceTypes: [],
     date: "",
-    file: "",
+    file: null,
   });
   const user = useSelector(selectUser);
 
@@ -87,30 +87,48 @@ const UserAllowance = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", user);
+
     const url = "http://localhost:5000/api/application/postApplication";
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", formData.file);
+    formDataToSend.append("employee", user.docId);
+    formDataToSend.append("employeeId", user.employeeId);
+    formDataToSend.append("employeeName", user.username);
+    formDataToSend.append("date", formData.date);
+    formDataToSend.append("allowanceType", formData.allowanceType);
+    formDataToSend.append(
+      "selectedAllowanceTypes",
+      JSON.stringify(formData.selectedAllowanceTypes)
+    );
+    
+
     axios
-      .post(url, {
-        ...formData,
-        employee: user.docId,
-        employeeId: user.employeeId,
-        employeeName: user.username,
+      .post(url, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
         toast(res.data.message);
+        // Reset form fields
+        setFormData({
+          employeeName: "",
+          employeeId: "",
+          allowanceType: "",
+          customAllowanceType: "",
+          selectedAllowanceTypes: [],
+          date: "",
+          file: null,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        toast("Error submitting form");
       });
-    // Reset form fields
-    setFormData({
-      employeeName: "",
-      employeeId: "",
-      allowanceType: "",
-      customAllowanceType: "",
-      selectedAllowanceTypes: [],
-      date: "",
-      file: "",
-    });
   };
+
+
 
   return (
     <>

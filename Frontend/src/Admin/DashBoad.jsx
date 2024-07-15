@@ -5,49 +5,45 @@ import "./DashBoad.css";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from 'axios';
 
-
 const url="http://localhost:5000/api/application/applications";
 const DashBoad = () => {
-    const [data1,setData]=useState('');
+    const [data1, setData] = useState([]);
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
-    const [remark,setRemark]=useState('');
+    const [remark, setRemark] = useState('');
 
     const handleUpdatePlan = (employee) => {    
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
 
-    //Fetch application data
-    useEffect(()=>{
-        const getData=async ()=>{
-        await axios.get(url).then((res=>{
-            setData(res.data);
-        }))
-    }
-    getData();
-    },[toggle]);
-  
-// Update the status of applications
+    // Fetch application data
+    useEffect(() => {
+        const getData = async () => {
+            await axios.get(url).then((res) => {
+                setData(res.data);
+            });
+        };
+        getData();
+    }, [toggle]);
+
+    // Update the status of applications
     const handleAction = (action) => {
-        axios.post('http://localhost:5000/api/application/updateApplication',{
-            _id:selectedEmployee._id,
-            status:action,
-            remark:remark
-        }).then((res)=>{
-            if(res.data){
+        axios.post('http://localhost:5000/api/application/updateApplication', {
+            _id: selectedEmployee._id,
+            status: action,
+            remark: remark
+        }).then((res) => {
+            if (res.data) {
                 toast(`Employee has been ${action}`);
                 setToggle(0); // Redirect back to the main table view
             }
-        })
-
+        });
     };
 
     return (
         <>
             <main className="DashBoad">
-                
-
                 {toggle === 0 && (
                     <>
                         <div className="table-responsive">
@@ -76,7 +72,6 @@ const DashBoad = () => {
                                                     >
                                                         View
                                                     </button>
-                                                    
                                                 </td>
                                             </tr>
                                         ))}
@@ -92,7 +87,7 @@ const DashBoad = () => {
                     <>
                         <div>
                             <button className="btn btn-secondary" onClick={() => setToggle(0)}>
-                            <FaArrowLeft /> Go Back
+                                <FaArrowLeft /> Go Back
                             </button>
                             <div className="details-container">
                                 <h1>Employee Details</h1>
@@ -106,55 +101,44 @@ const DashBoad = () => {
                                             <th>Employee Name</th>
                                             <td>{selectedEmployee.employeeName}</td>
                                         </tr>
-                                        
                                         <tr>
                                             <th>Date</th>
-                                            <td>{selectedEmployee.date.substring(0,10)}</td>
+                                            <td>{selectedEmployee.date.substring(0, 10)}</td>
                                         </tr>
-                                      
-                                            {selectedEmployee.selectedAllowanceTypes.map((item)=>(
-                                                <>
-                                            <tr>
-                                            <th>Allowance Type</th>
-                                            <td>{item.type}</td>
-                                           
-                                            </tr>
-                                            <tr>
-                                            
-                                            <th>Amount</th>
-                                            <td>{item.amount}</td>
-                                            </tr>
-                                            </>
-                                            
-                                            ))}
+                                        {selectedEmployee.selectedAllowanceTypes.map((item, index) => (
+                                            <React.Fragment key={index}>
+                                                <tr>
+                                                    <th>Allowance Type</th>
+                                                    <td>{item.type}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Amount</th>
+                                                    <td>{item.amount}</td>
+                                                </tr>
+                                            </React.Fragment>
+                                        ))}
                                         <tr>
                                             <th>Status</th>
                                             <td>{selectedEmployee.status}</td>
                                         </tr>
                                         <tr>
-                                            <th>Documents</th>
+                                            <th>Document</th>
                                             <td>
-                                            {
-                                                selectedEmployee.files.map((item)=>(
-                                                    <tr><a href={item}>{item}</a></tr>
-                                                ))
-                                            }
+                                                <a href={`http://localhost:5000/api/application/download/${encodeURIComponent(selectedEmployee.file.split("\\").pop())}`} download>
+                                                    View Document
+                                                </a>
                                             </td>
                                         </tr>
-                                        <tr>
-
-                                        </tr>
                                     </tbody>
-                                    
                                 </table>
                                 <input
-                                        type="text"
-                                        name="Remark"
-                                        placeholder="Remarks"
-                                        style={{width:"100%",height:"60px", margin:"20px 0px 20px 0px", borderRadius:"7px", padding:"10px"}}
-                                        value={remark}
-                                        onChange={(e)=>{setRemark(e.target.value)}}
-                                    />
+                                    type="text"
+                                    name="Remark"
+                                    placeholder="Remarks"
+                                    style={{width:"100%",height:"60px", margin:"20px 0px 20px 0px", borderRadius:"7px", padding:"10px"}}
+                                    value={remark}
+                                    onChange={(e) => { setRemark(e.target.value); }}
+                                />
                                 <br />
                                 <button className="btn btn-success Detail_buttom" onClick={() => handleAction('Accepted')}>
                                     Approve
