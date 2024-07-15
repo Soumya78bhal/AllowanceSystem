@@ -1,44 +1,96 @@
 .DashBoad {
-    width: 100%;
-    height: 20px;
-    padding: 2rem;
-    padding-top: 1rem;
-  }
-  .DashBoad h1 {
-    font-size: 2.7rem;
-  }
-  .DashBoad label {
-    font-size: 1.2rem;
-  }
+  width: 100%;
+  padding: 2rem;
+  padding-top: 1rem;
+}
 
+.DashBoad h1 {
+  font-size: 2.7rem;
+}
 
+.DashBoad label {
+  font-size: 1.2rem;
+}
 
-
-  .DashBoad .details-container {
-    text-align: left;
-    color: gray;
-    padding: 20px;
+.DashBoad .details-container {
+  text-align: left;
+  color: gray;
+  padding: 20px;
 }
 
 .DashBoad .details-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .DashBoad .details-table th,
 .DashBoad .details-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 .DashBoad .details-table th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
-.Detail_buttom{
+.Detail_buttom {
   margin-right: 20px;
 }
-  
 
+/* Responsive styles */
+@media (max-width: 768px) {
+  .DashBoad {
+    padding: 1rem;
+    padding-top: 0.5rem;
+  }
 
- 
+  .DashBoad h1 {
+    font-size: 2rem;
+  }
+
+  .DashBoad label {
+    font-size: 1rem;
+  }
+
+  .DashBoad .details-container {
+    padding: 10px;
+  }
+
+  .DashBoad .details-table th,
+  .DashBoad .details-table td {
+    padding: 4px;
+  }
+
+  .Detail_buttom {
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .DashBoad {
+    padding: 0.5rem;
+    margin-top: 40px;
+    padding-top: 0.25rem;
+  }
+
+  .DashBoad h1 {
+    font-size: 1.5rem;
+  }
+
+  .DashBoad label {
+    font-size: 0.8rem;
+  }
+
+  .DashBoad .details-container {
+    padding: 5px;
+  }
+
+  .DashBoad .details-table th,
+  .DashBoad .details-table td {
+    padding: 2px;
+  }
+
+  .Detail_buttom {
+    margin-right: 5px;
+  }
+}

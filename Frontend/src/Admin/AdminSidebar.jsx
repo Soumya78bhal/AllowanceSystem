@@ -1,37 +1,46 @@
-
-import { NavLink, Outlet, useNavigate, Navigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import hamburger and close icon
 import Header from "../Header.jsx";
 import Footer from "../Footer.jsx";
+import { useState } from "react"; // Import useState hook
 import "../Admin/AdminSidebar.css";
-
-
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false); // State to manage sidebar visibility
 
   const handleLogout = () => {
     navigate("/login");
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen); // Toggle sidebar visibility
+  };
+
+  const closeSidebar = () => {
+    setSidebarOpen(false); // Close sidebar
+  };
+
   return (
     <>
       <div className="window">
-
         <Header />
         <div className="layout">
-
-          <nav className="dashboard">
-            <h2 onClick={() => navigate("/admin/homePage")}> Admin Page </h2>
+          <nav className={`dashboard ${sidebarOpen ? "open" : ""}`}>
+            <button className="closebtn" onClick={closeSidebar}>
+              <FaTimes />
+            </button>
+            <h2 onClick={() => { navigate("/admin/homePage"); closeSidebar(); }}>Admin Page</h2>
             <ul>
               <li>
-                <NavLink to="/admin/dashboad">DashBoad</NavLink>
+                <NavLink to="/admin/dashboad" onClick={closeSidebar}>DashBoad</NavLink>
               </li>
               <li>
-                <NavLink to="/admin/createUser">Create New User</NavLink>
+                <NavLink to="/admin/createUser" onClick={closeSidebar}>Create New User</NavLink>
               </li>
               <li>
-                <NavLink to="/admin/verifyEmployee">verify Employee registration</NavLink>
+                <NavLink to="/admin/verifyEmployee" onClick={closeSidebar}>verify Employee registration</NavLink>
               </li>
             </ul>
             <button className="logoutbtn" onClick={handleLogout}>
@@ -39,10 +48,14 @@ const AdminSidebar = () => {
             </button>
           </nav>
           <div className="main-content">
+            {!sidebarOpen && (
+              <button className="hamburger" onClick={toggleSidebar}>
+                <FaBars />
+              </button>
+            )}
             <Outlet />
-            {/* <Navigate to="/admin/createUser" /> */}
           </div>
-          <Footer /> 
+          <Footer />
         </div>
       </div>
     </>

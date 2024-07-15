@@ -5,18 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from 'react-icons/fa';
 
 import Header from "./Header.jsx";
+import Footer from "./Footer.jsx";
 
 import axios from 'axios'
 
 import "./index.css";
 import "./login.css";
+
 import { CgPassword } from "react-icons/cg";
 import { useDispatch } from "react-redux";
 import { login, logout } from "./Feature/Userslice";
 // import './RegisterForm.css';
 
 const Registration = () => {
-  
+
   const [toggle, settoggle] = useState(0);
   const [step, setStep] = useState(0);
   const [employeeId, setEmployeeId] = useState('');
@@ -38,13 +40,13 @@ const Registration = () => {
       try {
         const response = await axios.post('http://localhost:5000/api/auth/register', { username, employeeId, password: newPassword });
         console.log(response.data);
-        if(response.data.errors){
+        if (response.data.errors) {
           setErrors1(response.data.errors);
-        }else{
+        } else {
           alert(response.data.message);
-          setFormData1({empId: response.data.empId});
-          setFormData2({empId: response.data.empId});
-          setFormData3({empId: response.data.empId});
+          setFormData1({ empId: response.data.empId });
+          setFormData2({ empId: response.data.empId });
+          setFormData3({ empId: response.data.empId });
           settoggle(2);
         }
       } catch (error) {
@@ -93,7 +95,7 @@ const Registration = () => {
 
   });
 
-  
+
   const [errors, setErrors] = useState({});
 
   const handleChange1 = (e) => {
@@ -144,16 +146,16 @@ const Registration = () => {
         console.log(`formData.empId: ${formData1.empId}`);
         const response = await axios.post('http://localhost:5000/api/empDetails/personalDetails', formData1);
         console.log(response.data);
-        if(response.data.errors){
+        if (response.data.errors) {
           setErrors1(response.data.errors);
-        }else{
+        } else {
           alert(response.data.message);
           setStep(step + 1);
         }
       } catch (error) {
         console.error("Error during signup: ", error);
       }
-      
+
     }
   };
   const handleNext2 = async () => {
@@ -161,16 +163,16 @@ const Registration = () => {
       try {
         const response = await axios.post('http://localhost:5000/api/empDetails/communicationDetails', formData2);
         console.log(response.data);
-        if(response.data.errors){
+        if (response.data.errors) {
           setErrors1(response.data.errors);
-        }else{
+        } else {
           alert(response.data.message);
           setStep(step + 1);
         }
       } catch (error) {
         console.error("Error during signup: ", error);
       }
-      
+
     }
   };
   const handleNext3 = async () => {
@@ -178,16 +180,16 @@ const Registration = () => {
       try {
         const response = await axios.post('http://localhost:5000/api/empDetails/otherDetails', formData3);
         console.log(response.data);
-        if(response.data.errors){
+        if (response.data.errors) {
           setErrors1(response.data.errors);
-        }else{
+        } else {
           alert(response.data.message);
           setStep(step + 1);
         }
       } catch (error) {
         console.error("Error during signup: ", error);
       }
-      
+
     }
   };
 
@@ -211,47 +213,47 @@ const Registration = () => {
     return isValid;
   };
 
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      try {
-        const response = await axios.post('http://localhost:5000/api/auth/login', {loginRole, username: lusername, password: lpassword});
-        console.log(response.data);
-        if(response.data.errors){
-          setErrors1(response.data.errors);
-          console.log(errors1);
-        }else{
-          alert(response.data.message);
-          console.log(response.data.user);
-          dispatch(
-            login({
-              username: response.data.user.username,
-              employeeId: response.data.user.employeeId,
-              docId: response.data.user._id,
-              isAdmin: response.data.user.isAdmin,
-              allowances: response.data.user.allowances,
-            })
-          );
-          if (loginRole === 'admin') {
-      
-            navigate("/admin/homePage");
-          } else {
-            
-            navigate("/user/homePage");
-          }
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', { loginRole, username: lusername, password: lpassword });
+      console.log(response.data);
+      if (response.data.errors) {
+        setErrors1(response.data.errors);
+        console.log(errors1);
+      } else {
+        alert(response.data.message);
+        console.log(response.data.user);
+        dispatch(
+          login({
+            username: response.data.user.username,
+            employeeId: response.data.user.employeeId,
+            docId: response.data.user._id,
+            isAdmin: response.data.user.isAdmin,
+            allowances: response.data.user.allowances,
+          })
+        );
+        if (loginRole === 'admin') {
+
+          navigate("/admin/homePage");
+        } else {
+
+          navigate("/user/homePage");
         }
-      } catch (error) {
-        console.error("Error during login: ", error);
-        alert(error.message);
       }
-      
+    } catch (error) {
+      console.error("Error during login: ", error);
+      alert(error.message);
+    }
+
   };
 
   return (
     <>
-    <Header />
+      <Header />
       <main>
         {toggle === 0 && (
           <>
@@ -270,30 +272,30 @@ const Registration = () => {
                         value={loginRole}
                         onChange={(e) => setLoginRole(e.target.value)}
                         required>
-                      <option value=''>Select your role</option>
-                      <option value='admin'>Admin</option>
-                      <option value='employee'>Employee</option>
-                    </select>
-                  </div>
-                  </div>
-
-
-                {/* Username */}
-                <div className='form-group'>
-                  <label htmlFor='username'>Username:</label>
-                  <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter your username' value={lusername} onChange={(e) => setLusername(e.target.value)} autocomplete="off" required />
-                    <FaUser className='icon' />
-                  </div>
+                        <option value=''>Select your role</option>
+                        <option value='admin'>Admin</option>
+                        <option value='employee'>Employee</option>
+                      </select>
+                    </div>
                   </div>
 
-                {/* Password */}
-                <div className='form-group'>
-                  <label htmlFor='password'>Password:</label>
-                  <div className='input-box'>
-                    <input type='password' id='password' value={lpassword} onChange={(e) => setLpassword(e.target.value)} placeholder='Enter your password' required />
-                    <FaLock className='icon' />
+
+                  {/* Username */}
+                  <div className='form-group'>
+                    <label htmlFor='username'>Username:</label>
+                    <div className='input-box'>
+                      <input type='text' id='username' placeholder='Enter your username' value={lusername} onChange={(e) => setLusername(e.target.value)} autocomplete="off" required />
+                      <FaUser className='icon' />
+                    </div>
                   </div>
+
+                  {/* Password */}
+                  <div className='form-group'>
+                    <label htmlFor='password'>Password:</label>
+                    <div className='input-box'>
+                      <input type='password' id='password' value={lpassword} onChange={(e) => setLpassword(e.target.value)} placeholder='Enter your password' required />
+                      <FaLock className='icon' />
+                    </div>
                   </div>
                   {/* Login Button */}
                   <button type='submit'>Login</button>
@@ -304,9 +306,9 @@ const Registration = () => {
                       Don't have an account? <a className="btn btn-outline-danger" onClick={() => settoggle(1)}>Register</a>
                     </p>
                   </div>
-                  
+
                 </form>
-                
+
               </div>
             </div>
 
@@ -318,24 +320,24 @@ const Registration = () => {
           <>
             <div className="Login">
 
-            <div className='wrapper'>
-              <form >
-                <h1>Register</h1>
+              <div className='wrapper'>
+                <form >
+                  <h1>Register</h1>
 
-                {/* Employee ID */}
-                <div className='form-group'>
-                  <label htmlFor='loginRole'>Employee ID</label>
-                  <div className='input-box'>
-                    <input type='text' id='loginRole' placeholder='Enter your Employee ID' value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required />
+                  {/* Employee ID */}
+                  <div className='form-group'>
+                    <label htmlFor='loginRole'>Employee ID</label>
+                    <div className='input-box'>
+                      <input type='text' id='loginRole' placeholder='Enter your Employee ID' value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required />
+                    </div>
                   </div>
-                  </div>
-                {/* Username */}
-                <div className='form-group'>
-                  <label htmlFor='username'>Username:</label>
-                  <div className='input-box'>
-                    <input type='text' id='username' placeholder='Enter a username' value={username} onChange={(e) => setUsername(e.target.value)} required />
-                    <FaUser className='icon' />
-                  </div>
+                  {/* Username */}
+                  <div className='form-group'>
+                    <label htmlFor='username'>Username:</label>
+                    <div className='input-box'>
+                      <input type='text' id='username' placeholder='Enter a username' value={username} onChange={(e) => setUsername(e.target.value)} required />
+                      <FaUser className='icon' />
+                    </div>
                   </div>
                   {/* New Password */}
                   <div className='form-group'>
@@ -370,14 +372,14 @@ const Registration = () => {
                     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                   </div>
 
-                {/* Create Account Button */}
-                <button type='submit' className='btn btn-primary' onClick={handleRegistor}>Create Account</button>
+                  {/* Create Account Button */}
+                  <button type='submit' className='btn btn-primary' onClick={handleRegistor}>Create Account</button>
 
                 {/* Additional Login Option */}
                 
                 <div className='register-link'>
                   <p>
-                  If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(2)}>Login</a>
+                  If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(0)}>Login</a>
                   </p>
                 </div>
               </form>
@@ -716,178 +718,180 @@ const Registration = () => {
                                   onChange={handleChange2}
                                 />
                                 {errors.permanentPincode && <span className="error">{errors.permanentPincode}</span>}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <input
-                            type="button"
-                            name="previous"
-                            className="previous action-button-previous"
-                            value="Previous"
-                            onClick={handlePrevious}
-                          />
-                          <input
-                            type="button"
-                            name="next"
-                            className="next action-button"
-                            value="Next"
-                            onClick={handleNext2}
-                          />
-                        </fieldset>
+                            <input
+                              type="button"
+                              name="previous"
+                              className="previous action-button-previous"
+                              value="Previous"
+                              onClick={handlePrevious}
+                            />
+                            <input
+                              type="button"
+                              name="next"
+                              className="next action-button"
+                              value="Next"
+                              onClick={handleNext2}
+                            />
+                          </fieldset>
 
-                        <fieldset style={{ display: step === 2 ? "block" : "none" }}>
-                          <h2 className="fs-title">Other Details</h2>
-                          <div className="form-card">
-                            <div className="left-container">
-                              <div className="field-container">
-                                <label className="field-label">Address Proof</label>
-                                <input
-                                  type="file"
-                                  name="addressProof"
-                                  value={formData3.addressProof}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.addressProof && <span className="error">{errors.addressProof}</span>}
-                              </div>
-                              <div className="field-container">
-                                <label className="field-label">Identity Proof</label>
-                                <input
-                                  type="file"
-                                  name="identityProof"
-                                  value={formData3.identityProof}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.identityProof && <span className="error">{errors.identityProof}</span>}
-                              </div>
+                          <fieldset style={{ display: step === 2 ? "block" : "none" }}>
+                            <h2 className="fs-title">Other Details</h2>
+                            <div className="form-card">
+                              <div className="left-container">
+                                <div className="field-container">
+                                  <label className="field-label">Address Proof</label>
+                                  <input
+                                    type="file"
+                                    name="addressProof"
+                                    value={formData3.addressProof}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.addressProof && <span className="error">{errors.addressProof}</span>}
+                                </div>
+                                <div className="field-container">
+                                  <label className="field-label">Identity Proof</label>
+                                  <input
+                                    type="file"
+                                    name="identityProof"
+                                    value={formData3.identityProof}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.identityProof && <span className="error">{errors.identityProof}</span>}
+                                </div>
 
 
-                              <div className="field-container">
-                                <label className="field-label">Physically Challenged</label>
-                                <input
-                                  type="file"
-                                  name="physicallyChallenged"
-                                  value={formData3.physicallyChallenged}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.physicallyChallenged && <span className="error">{errors.physicallyChallenged}</span>}
+                                <div className="field-container">
+                                  <label className="field-label">Physically Challenged</label>
+                                  <input
+                                    type="file"
+                                    name="physicallyChallenged"
+                                    value={formData3.physicallyChallenged}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.physicallyChallenged && <span className="error">{errors.physicallyChallenged}</span>}
+                                </div>
+                                <div className="field-container">
+                                  <label className="field-label">Ex-Soldier</label>
+                                  <input
+                                    type="file"
+                                    name="exSoldier"
+                                    value={formData3.exSoldier}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.exSoldier && <span className="error">{errors.exSoldier}</span>}
+                                </div>
+
+                                <div className="field-container">
+                                  <label className="field-label">PanCard</label>
+                                  <input
+                                    type="file"
+                                    name="pancard"
+                                    value={formData3.pancard}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.pancard && <span className="error">{errors.pancard}</span>}
+                                </div>
+
+                                <div className="field-container">
+                                  <label className="field-label">Offer Letter</label>
+                                  <input
+                                    type="file"
+                                    name="offerLetter"
+                                    value={formData3.offerLetter}
+                                    onChange={handleFileChange}
+                                  />
+                                  {errors.offerLetter && <span className="error">{errors.offerLetter}</span>}
+                                </div>
+
                               </div>
-                              <div className="field-container">
-                                <label className="field-label">Ex-Soldier</label>
-                                <input
-                                  type="file"
-                                  name="exSoldier"
-                                  value={formData3.exSoldier}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.exSoldier && <span className="error">{errors.exSoldier}</span>}
+                            </div>
+                            <input
+                              type="button"
+                              name="previous"
+                              className="previous action-button-previous"
+                              value="Previous"
+                              onClick={handlePrevious}
+                            />
+                            <input
+                              type="button"
+                              name="next"
+                              className="next action-button"
+                              value="Next"
+                              onClick={handleNext3}
+                            />
+                          </fieldset>
+
+                          <fieldset style={{ display: step === 3 ? "block" : "none" }}>
+                            <h2 className="fs-title">Review</h2>
+                            <div className="form-card">
+                              <div className="review-section">
+                                <h4>Personal Details</h4>
+                                <p>
+                                  <strong>Employee ID:</strong> {employeeId}
+                                </p>
+                                <p>
+                                  <strong>Name:</strong> {formData1.firstName} {formData1.middleName} {formData1.lastName}
+                                </p>
+
+                                <p>
+                                  <strong>Gender:</strong> {formData1.gender}
+                                </p>
+                                <p>
+                                  <strong>Marital Status:</strong> {formData1.maritalStatus}
+                                </p>
+                                <p>
+                                  <strong>Email:</strong> {formData1.email}
+                                </p>
+
+                                <p>
+                                  <strong>Date of Birth:</strong> {formData1.dob}
+                                </p>
+
+
+
+                                <h4>Communication Details</h4>
+                                <p>
+                                  <strong>Present Address:</strong>
+
+                                  {`${formData2.presentLocality}, ${formData2.presentDistrict}, ${formData2.presentState}`}
+                                </p>
+                                <p>
+                                  <strong>Permanent Address:</strong>
+                                  {`${formData2.permanentLocality}, ${formData2.permanentDistrict}, ${formData2.permanentState}`}
+                                </p>
                               </div>
 
-                              <div className="field-container">
-                                <label className="field-label">PanCard</label>
-                                <input
-                                  type="file"
-                                  name="pancard"
-                                  value={formData3.pancard}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.pancard && <span className="error">{errors.pancard}</span>}
-                              </div>
-
-                              <div className="field-container">
-                                <label className="field-label">Offer Letter</label>
-                                <input
-                                  type="file"
-                                  name="offerLetter"
-                                  value={formData3.offerLetter}
-                                  onChange={handleFileChange}
-                                />
-                                {errors.offerLetter && <span className="error">{errors.offerLetter}</span>}
-                              </div>
 
                             </div>
-                          </div>
-                          <input
-                            type="button"
-                            name="previous"
-                            className="previous action-button-previous"
-                            value="Previous"
-                            onClick={handlePrevious}
-                          />
-                          <input
-                            type="button"
-                            name="next"
-                            className="next action-button"
-                            value="Next"
-                            onClick={handleNext3}
-                          />
-                        </fieldset>
-
-                        <fieldset style={{ display: step === 3 ? "block" : "none" }}>
-                          <h2 className="fs-title">Review</h2>
-                          <div className="form-card">
-                            <div className="review-section">
-                              <h4>Personal Details</h4>
-                              <p>
-                                <strong>Employee ID:</strong> {employeeId}
-                              </p>
-                              <p>
-                                <strong>Name:</strong> {formData1.firstName} {formData1.middleName} {formData1.lastName}
-                              </p>
-
-                              <p>
-                                <strong>Gender:</strong> {formData1.gender}
-                              </p>
-                              <p>
-                                <strong>Marital Status:</strong> {formData1.maritalStatus}
-                              </p>
-                              <p>
-                                <strong>Email:</strong> {formData1.email}
-                              </p>
-
-                              <p>
-                                <strong>Date of Birth:</strong> {formData1.dob}
-                              </p>
-
-
-
-                              <h4>Communication Details</h4>
-                              <p>
-                                <strong>Present Address:</strong>
-
-                                {`${formData2.presentLocality}, ${formData2.presentDistrict}, ${formData2.presentState}`}
-                              </p>
-                              <p>
-                                <strong>Permanent Address:</strong>
-                                {`${formData2.permanentLocality}, ${formData2.permanentDistrict}, ${formData2.permanentState}`}
-                              </p>
-                            </div>
-
-
-                          </div>
-                          <input
-                            type="button"
-                            name="previous"
-                            className="previous action-button-previous"
-                            value="Previous"
-                            onClick={handlePrevious}
-                          />
-                          <input
-                            type="submit"
-                            name="submit"
-                            className="submit action-button"
-                            value="Submit"
-                            onClick={handleSubmits}
-                          />
-                        </fieldset>
-                      </form>
+                            <input
+                              type="button"
+                              name="previous"
+                              className="previous action-button-previous"
+                              value="Previous"
+                              onClick={handlePrevious}
+                            />
+                            <input
+                              type="submit"
+                              name="submit"
+                              className="submit action-button"
+                              value="Submit"
+                              onClick={handleSubmits}
+                            />
+                          </fieldset>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
-          </div>
           </>
         )}
+        <Footer />
       </main>
     </>
   )

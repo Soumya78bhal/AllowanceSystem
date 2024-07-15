@@ -1,17 +1,16 @@
-
-*{
+/* Global styles */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-
-  #username::placeholder, #password::placeholder {
-    color: gray; /* Change this to your desired color */
-    opacity: 1; /* Adjust the opacity if needed */
-  }
-   
   
-
+  #username::placeholder, #password::placeholder {
+    color: gray;
+    opacity: 1;
+  }
+  
+  /* Login wrapper styles */
   .Login {
     font-family: "Poppins", sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -20,135 +19,14 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url(./assets/background3.jpg) no-repeat;
-    /* background-color: #00152a; */
+    background: url(./assets/background3.jpg) no-repeat center;
     background-size: cover;
-    background-position: center;
   }
-.wrapper {
-    width: 420px;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(30px);
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
-    color: #fff;
-    border-radius: 10px;
-    padding: 30px 40px;
-}
-
-.Registerwrapper h1 {
-    font-size: 36px;
-    text-align: center;
-}
-
-.Registerform-group {
-    margin-bottom: 20px;
-}
-
-.Registerform-group label {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 10px;
-    margin-right: 245px;
-    /* color: black; */
-}
-
-.Registerinput-box {
-    position: relative;
+  
+  /* Form wrapper styles */
+  .wrapper {
     width: 100%;
-    height: 50px;
-}
-
-.Registerinput-box input,
-.Registerinput-box select {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    outline: none;
-    border: none;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-    /* Underline effect */
-    font-size: 16px;
-    color: #fff;
-    padding-left: 20px;
-}
-
-.input-box input::placeholder,
-.input-box select::placeholder {
-    color: #fff;
-}
-
-.input-box .icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-}
-
-
-
-
-.dropdown option{
-    color: black;
-}
-
-.remember-forget {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14.5px;
-    margin: 15px 0;
-}
-
-.remember-forget label input {
-    accent-color: #fff;
-    margin-right: 4px;
-}
-
-.remember-forget a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.remember-forget a:hover {
-    text-decoration: underline;
-}
-
-.wrapper button {
-    width: 100%;
-    height: 45px;
-    background: #1f0d5d;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 700;
-}
-
-.register-link {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.register-link p a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link p a:hover {
-    text-decoration: underline;
-}
-
-
-.wrapper {
-
     max-width: 420px;
-    width: 100%;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(30px);
@@ -156,32 +34,32 @@
     border-radius: 10px;
     padding: 30px 40px;
     margin: auto;
-}
-
-.wrapper h1 {
+    overflow: hidden;
+  }
+  
+  .wrapper h1 {
     font-size: 36px;
     text-align: center;
-}
-
-.form-group {
+  }
+  
+  .form-group {
     margin-bottom: 20px;
-}
-
-.form-group label {
-    text-align: left;
+  }
+  
+  .form-group label {
     display: block;
     font-size: 18px;
     margin-bottom: 10px;
-}
-
-.input-box {
+  }
+  
+  .input-box {
     position: relative;
     width: 100%;
     height: 50px;
-}
-
-.input-box input,
-.input-box select {
+  }
+  
+  .input-box input,
+  .input-box select {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -191,26 +69,48 @@
     font-size: 16px;
     color: #fff;
     padding-left: 20px;
-}
-
-.input-box input::placeholder,
-.input-box select::placeholder {
+  }
+  
+  .input-box input::placeholder,
+  .input-box select::placeholder {
     color: #3c3939;
-}
-
-.input-box .icon {
+  }
+  
+  .input-box .icon {
     position: absolute;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
-}
-
-.dropdown option {
+  }
+  
+  .dropdown option {
     color: black;
-}
-
-.wrapper button {
+  }
+  
+  .remember-forget {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14.5px;
+    margin: 15px 0;
+  }
+  
+  .remember-forget label input {
+    accent-color: #fff;
+    margin-right: 4px;
+  }
+  
+  .remember-forget a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .remember-forget a:hover {
+    text-decoration: underline;
+  }
+  
+  .wrapper button {
     width: 100%;
     height: 45px;
     background: #1f0d5d;
@@ -222,47 +122,95 @@
     font-size: 16px;
     color: #fff;
     font-weight: 700;
-}
-
-.login-option {
+  }
+  
+  .register-link, .login-option {
     text-align: center;
     margin-top: 20px;
-
-}
-
-.login-option p a {
+  }
+  
+  .register-link p a, .login-option p a {
     color: #fff;
     text-decoration: none;
     font-weight: 600;
-}
-
-.login-option p a:hover {
+  }
+  
+  .register-link p a:hover, .login-option p a:hover {
     text-decoration: underline;
-}
-
-@media (max-width: 600px) {
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 1024px) {
     .wrapper {
-        padding: 20px;
+      padding: 25px 30px;
     }
-
+  
     .wrapper h1 {
-        font-size: 28px;
+      font-size: 32px;
     }
-
+  
     .form-group label {
-        font-size: 16px;
+      font-size: 16px;
     }
-
+  
     .input-box input,
     .input-box select {
-        font-size: 14px;
-        padding-left: 10px;
+      font-size: 15px;
     }
-
+  
     .wrapper button {
-        height: 40px;
-        font-size: 14px;
+      height: 40px;
+      font-size: 15px;
     }
-
-
-}
+  }
+  
+  @media (max-width: 768px) {
+    .wrapper {
+      padding: 20px;
+    }
+  
+    .wrapper h1 {
+      font-size: 28px;
+    }
+  
+    .form-group label {
+      font-size: 15px;
+    }
+  
+    .input-box input,
+    .input-box select {
+      font-size: 14px;
+      padding-left: 15px;
+    }
+  
+    .wrapper button {
+      height: 40px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .wrapper {
+      padding: 20px;
+    }
+  
+    .wrapper h1 {
+      font-size: 24px;
+    }
+  
+    .form-group label {
+      font-size: 14px;
+    }
+  
+    .input-box input,
+    .input-box select {
+      font-size: 14px;
+      padding-left: 10px;
+    }
+  
+    .wrapper button {
+      height: 40px;
+      font-size: 14px;
+    }
+  }
+  
