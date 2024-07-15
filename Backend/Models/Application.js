@@ -16,7 +16,7 @@ const applicationSchema = new mongoose.Schema({
   },
   allowanceType: {
     type: String,
-    default: '' // Provide a default value if needed
+    default: '' 
   },
   customAllowanceType: {
     type: String,
@@ -49,7 +49,7 @@ const applicationSchema = new mongoose.Schema({
     type:String
   },
   file: {
-    type: String // Assuming you store file paths or URLs
+    type: String 
   }
 });
 

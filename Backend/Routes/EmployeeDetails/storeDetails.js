@@ -32,7 +32,6 @@ router.post(
       let personalDetails = await PersonalDetails.findOne({ employeeId : empId});
 
       if (personalDetails) {
-        // Update existing record
         personalDetails.name = firstName + " " + middleName ? middleName + " " : "" + lastName;
         personalDetails.email = email;
         personalDetails.relationType = relationType;
@@ -43,7 +42,6 @@ router.post(
         personalDetails.photograph = photograph;
         personalDetails.signature = signature;
       } else {
-        // Create new record
         personalDetails = new PersonalDetails({
           employeeId : empId,
           name : firstName + " " + middleName ? middleName + " " : "" + lastName,
@@ -68,11 +66,7 @@ router.post(
 );
 
 router.post(
-  "/communicationDetails",
-  [
-    
-  ],
-  async (req, res) => {
+  "/communicationDetails", async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -96,9 +90,7 @@ router.post(
 
     try {
       let communicationDetails = await CommunicationDetails.findOne({ employeeId : empId});
-
       if (communicationDetails) {
-        // Update existing record
         communicationDetails.presentHouse = presentHouseNo;
         communicationDetails.presentCity = presentLocality;
         communicationDetails.presentCountry = presentCountry;
@@ -112,7 +104,6 @@ router.post(
         communicationDetails.permanentDistrict = permanentDistrict;
         communicationDetails.permanentPinCode = permanentPincode;
       } else {
-        // Create new record
         communicationDetails = new CommunicationDetails({
           employeeId:empId,
           presentHouse: presentHouseNo,

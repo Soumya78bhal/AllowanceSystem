@@ -6,7 +6,6 @@ import Registration from './Registration';
 import AdminSidebar from "./Admin/AdminSidebar";
 import CreateUser from "./Admin/CreateUser";
 import DashBoad from "./Admin/DashBoad";
-import VerifyEmployee from "./Admin/VerifyEmployee";
 import AdminHomePage from "./Admin/AdminHomePage.jsx";
 
 import UserSidebar from "./User/UserSidebar.jsx";
@@ -36,7 +35,6 @@ function App() {
                 path="/admin/dashboad"
                 element={<DashBoad />}
               ></Route>
-              <Route path="/admin/verifyEmployee" element={<VerifyEmployee />}></Route>
             </Route>
 
             {/* -------------User Page Routing--------------- */}

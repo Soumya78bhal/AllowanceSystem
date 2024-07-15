@@ -101,7 +101,7 @@ const Registration = () => {
   const handleChange1 = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData1({
-      ...formData2,
+      ...formData1,
       [name]: type === 'checkbox' ? checked : value,
     });
   };
@@ -114,15 +114,23 @@ const Registration = () => {
     });
   };
 
- 
-
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
+  const handleChange3 = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData3({
       ...formData3,
-      [name]: files[0],
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
+
+ 
+
+  // const handleFileChange = (e) => {
+  //   const { name, files } = e.target;
+  //   setFormData3({
+  //     ...formData3,
+  //     [name]: files[0],
+  //   });
+  // };
   const navigate = useNavigate();
 
 
@@ -747,7 +755,7 @@ const Registration = () => {
                                     type="file"
                                     name="addressProof"
                                     value={formData3.addressProof}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.addressProof && <span className="error">{errors.addressProof}</span>}
                                 </div>
@@ -757,7 +765,7 @@ const Registration = () => {
                                     type="file"
                                     name="identityProof"
                                     value={formData3.identityProof}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.identityProof && <span className="error">{errors.identityProof}</span>}
                                 </div>
@@ -769,7 +777,7 @@ const Registration = () => {
                                     type="file"
                                     name="physicallyChallenged"
                                     value={formData3.physicallyChallenged}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.physicallyChallenged && <span className="error">{errors.physicallyChallenged}</span>}
                                 </div>
@@ -779,7 +787,7 @@ const Registration = () => {
                                     type="file"
                                     name="exSoldier"
                                     value={formData3.exSoldier}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.exSoldier && <span className="error">{errors.exSoldier}</span>}
                                 </div>
@@ -790,7 +798,7 @@ const Registration = () => {
                                     type="file"
                                     name="pancard"
                                     value={formData3.pancard}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.pancard && <span className="error">{errors.pancard}</span>}
                                 </div>
@@ -801,7 +809,7 @@ const Registration = () => {
                                     type="file"
                                     name="offerLetter"
                                     value={formData3.offerLetter}
-                                    onChange={handleFileChange}
+                                    onChange={handleChange3}
                                   />
                                   {errors.offerLetter && <span className="error">{errors.offerLetter}</span>}
                                 </div>

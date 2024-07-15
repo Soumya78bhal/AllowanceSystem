@@ -22,40 +22,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// POST /applications - Create a new application
-router.post('/register', async (req, res) => {
-    const { employee, allowanceType, startDate, endDate, status, bill } = req.body;
-
-    try {
-        // Ensure the employee exists
-        const employeeExists = await Employee.findById(employee);
-        if (!employeeExists) {
-            return res.status(404).send({ message: "Employee does not exist" });
-        }
-
-        const newApplication = new Application({
-            employee,
-            allowanceType,
-            startDate,
-            endDate,
-            status,
-            bill
-        });
-
-        const savedApplication = await newApplication.save();
-
-        // Add the application to the employee's allowances array
-        employeeExists.allowances.push(savedApplication._id);
-        await employeeExists.save();
-
-        res.status(201).send({ message: "Application submitted successfully", application: newApplication });
-
-    } catch (error) {
-        console.error("Error creating application: ", error);
-        res.status(500).send({ message: "Internal server error" });
-    }
-});
-
 // GET /applications - Retrieve all applications
 router.get('/applications', async (req, res) => {
     try {
@@ -90,9 +56,6 @@ router.get('/userApplications/:id',async(req,res)=>{
 
     try{
         const allowances= await Application.find({employee:id});
-        // if(!data){
-        //     return res.status(404).send({message:"Application not found"});
-        // }
         res.status(200).send(allowances)
     }catch(e){
         console.error("Error retrieving application: ", e);

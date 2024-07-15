@@ -39,9 +39,6 @@ const AdminSidebar = () => {
               <li>
                 <NavLink to="/admin/createUser" onClick={closeSidebar}>Create New User</NavLink>
               </li>
-              <li>
-                <NavLink to="/admin/verifyEmployee" onClick={closeSidebar}>Employee Verification</NavLink>
-              </li>
             </ul>
             <button className="logoutbtn" onClick={handleLogout}>
               Logout <MdLogout />
