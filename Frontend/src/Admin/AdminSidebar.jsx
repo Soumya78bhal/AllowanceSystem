@@ -34,13 +34,13 @@ const AdminSidebar = () => {
             <h2 onClick={() => { navigate("/admin/homePage"); closeSidebar(); }}>Admin Page</h2>
             <ul>
               <li>
-                <NavLink to="/admin/dashboad" onClick={closeSidebar}>DashBoad</NavLink>
+                <NavLink to="/admin/dashboad" onClick={closeSidebar}>DashBoard</NavLink>
               </li>
               <li>
                 <NavLink to="/admin/createUser" onClick={closeSidebar}>Create New User</NavLink>
               </li>
               <li>
-                <NavLink to="/admin/verifyEmployee" onClick={closeSidebar}>verify Employee registration</NavLink>
+                <NavLink to="/admin/verifyEmployee" onClick={closeSidebar}>Employee Verification</NavLink>
               </li>
             </ul>
             <button className="logoutbtn" onClick={handleLogout}>
