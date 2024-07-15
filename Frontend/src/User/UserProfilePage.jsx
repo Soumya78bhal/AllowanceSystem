@@ -62,7 +62,7 @@ const UserProfilePage = () => {
                 {editMode && <button className="edit-button" onClick={toggleEditMode}>Cancel</button>}
 
                 <div className='user--profile'>
-                    <img src={details?.personalDetails.photograph} alt='userpic' width="100" className="rounded-circle" />
+                    <img src="https://i.imgur.com/bDLhJiP.jpg" alt='userpic' width="100" className="rounded-circle" />
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className='left-container'>
