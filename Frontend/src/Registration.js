@@ -36,7 +36,7 @@ const Registration = () => {
     } else {
       setErrorMessage('');
       try {
-        const response = await axios.post('http://l+ocalhost:5000/api/auth/register', { username, employeeId, password: newPassword });
+        const response = await axios.post('http://localhost:5000/api/auth/register', { username, employeeId, password: newPassword });
         console.log(response.data);
         if(response.data.errors){
           setErrors1(response.data.errors);
@@ -96,32 +96,26 @@ const Registration = () => {
   
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange1 = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData1({
-      ...formData1,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-    setFormData2({
       ...formData2,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-    setFormData3({
-      ...formData3,
       [name]: type === 'checkbox' ? checked : value,
     });
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData1({
-      ...formData1,
-      [name]: files[0],
-    });
+  const handleChange2 = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData2({
       ...formData2,
-      [name]: files[0],
+      [name]: type === 'checkbox' ? checked : value,
     });
+  };
+
+ 
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
     setFormData3({
       ...formData3,
       [name]: files[0],
@@ -444,7 +438,7 @@ const Registration = () => {
                                   name="firstName"
                                   placeholder="First Name"
                                   value={formData1.firstName}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.firstName && <span className="error">{errors.firstName}</span>}
                               </div>
@@ -455,7 +449,7 @@ const Registration = () => {
                                   name="middleName"
                                   placeholder="Middle Name"
                                   value={formData1.middleName}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.middleName && <span className="error">{errors.middleName}</span>}
                               </div>
@@ -466,7 +460,7 @@ const Registration = () => {
                                   name="lastName"
                                   placeholder="Last Name"
                                   value={formData1.lastName}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.lastName && <span className="error">{errors.lastName}</span>}
                               </div>
@@ -475,7 +469,7 @@ const Registration = () => {
                                 <select
                                   name="gender"
                                   value={formData1.gender}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 >
                                   <option value="">Select Gender</option>
                                   <option value="Male">Male</option>
@@ -491,7 +485,7 @@ const Registration = () => {
                                   name="email"
                                   placeholder="Email"
                                   value={formData1.email}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.email && <span className="error">{errors.email}</span>}
                               </div>
@@ -502,7 +496,7 @@ const Registration = () => {
                                 <select
                                   name="relationType"
                                   value={formData1.relationType}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 >
                                   <option value="">Select Relation</option>
                                   <option value="Father">Father</option>
@@ -518,7 +512,7 @@ const Registration = () => {
                                   name="relationName"
                                   placeholder="Relation Name"
                                   value={formData1.relationName}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.relationName && <span className="error">{errors.relationName}</span>}
                               </div>
@@ -528,7 +522,7 @@ const Registration = () => {
                                   type="date"
                                   name="dob"
                                   value={formData1.dob}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.dob && <span className="error">{errors.dob}</span>}
                               </div>
@@ -537,7 +531,7 @@ const Registration = () => {
                                 <select
                                   name="maritalStatus"
                                   value={formData1.maritalStatus}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 >
                                   <option value="">Select Status</option>
                                   <option value="Married">Married</option>
@@ -551,7 +545,7 @@ const Registration = () => {
                                   type="file"
                                   name="photograph"
                                   value={formData1.photograph}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.photograph && <span className="error">{errors.photograph}</span>}
                               </div>
@@ -561,7 +555,7 @@ const Registration = () => {
                                   type="file"
                                   name="signature"
                                   value={formData1.signature}
-                                  onChange={handleChange}
+                                  onChange={handleChange1}
                                 />
                                 {errors.signature && <span className="error">{errors.signature}</span>}
                               </div>
@@ -587,7 +581,7 @@ const Registration = () => {
                                   name="presentHouseNo"
                                   placeholder="House No."
                                   value={formData2.presentHouseNo}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.presentHouseNo && <span className="error">{errors.presentHouseNo}</span>}
                               </div>
@@ -599,7 +593,7 @@ const Registration = () => {
                                   name="presentLocality"
                                   placeholder="City"
                                   value={formData2.presentLocality}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.presentLocality && <span className="error">{errors.presentLocality}</span>}
                               </div>
@@ -608,7 +602,7 @@ const Registration = () => {
                                 <select
                                   name="presentCountry"
                                   value={formData2.presentCountry}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select Country</option>
                                   <option value="India">India</option>
@@ -620,7 +614,7 @@ const Registration = () => {
                                 <select
                                   name="presentState"
                                   value={formData2.presentState}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select State</option>
                                   <option value="Odisha">Odisha</option>
@@ -633,7 +627,7 @@ const Registration = () => {
                                 <select
                                   name="presentDistrict"
                                   value={formData2.presentDistrict}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select District</option>
                                   <option value="Sambalpur">Sambalpur</option>
@@ -647,7 +641,7 @@ const Registration = () => {
                                   name="presentPincode"
                                   placeholder="Pincode"
                                   value={formData2.presentPincode}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.presentPincode && <span className="error">{errors.presentPincode}</span>}
                               </div>
@@ -660,7 +654,7 @@ const Registration = () => {
                                   name="permanentHouseNo"
                                   placeholder="House No."
                                   value={formData2.permanentHouseNo}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.permanentHouseNo && <span className="error">{errors.permanentHouseNo}</span>}
                               </div>
@@ -672,7 +666,7 @@ const Registration = () => {
                                   name="permanentLocality"
                                   placeholder="City"
                                   value={formData2.permanentLocality}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.permanentLocality && <span className="error">{errors.permanentLocality}</span>}
                               </div>
@@ -681,7 +675,7 @@ const Registration = () => {
                                 <select
                                   name="permanentCountry"
                                   value={formData2.permanentCountry}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select Country</option>
                                   <option value="India">India</option>
@@ -693,7 +687,7 @@ const Registration = () => {
                                 <select
                                   name="permanentState"
                                   value={formData2.permanentState}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select State</option>
                                   <option value="Odisha">Odisha</option>
@@ -705,7 +699,7 @@ const Registration = () => {
                                 <select
                                   name="permanentDistrict"
                                   value={formData2.permanentDistrict}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 >
                                   <option value="">Select District</option>
                                   <option value="Sambalpur">Sambalpur</option>
@@ -719,7 +713,7 @@ const Registration = () => {
                                   name="permanentPincode"
                                   placeholder="Pincode"
                                   value={formData2.permanentPincode}
-                                  onChange={handleChange}
+                                  onChange={handleChange2}
                                 />
                                 {errors.permanentPincode && <span className="error">{errors.permanentPincode}</span>}
                               </div>

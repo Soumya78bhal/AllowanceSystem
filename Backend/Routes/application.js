@@ -4,7 +4,10 @@ const Employee = require('../Models/Employee/Employee'); // Ensure Employee mode
 const router = express.Router();
 const {ObjectId}=require('mongodb');
 const { set } = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 
+router.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // POST /applications - Create a new application
 router.post('/register', async (req, res) => {
     const { employee, allowanceType, startDate, endDate, status, bill } = req.body;
@@ -72,13 +75,13 @@ router.get('/userApplications/:id',async(req,res)=>{
     const {id}=req.params;
 
     try{
-        const data= await Application.find({employee:id});
-        if(!data){
-            return res.status(404).send({message:"Application not found"});
-        }
-        res.status(200).send(data)
+        const allowances= await Application.find({employee:id});
+        // if(!data){
+        //     return res.status(404).send({message:"Application not found"});
+        // }
+        res.status(200).send(allowances)
     }catch(e){
-        console.error("Error retrieving application: ", error);
+        console.error("Error retrieving application: ", e);
         res.status(500).send({ message: "Internal server error" });
     }
 })
@@ -101,9 +104,9 @@ router.get('/userData/:id',async(req,res)=>{
 //Save Applications
 router.post('/postApplication',async (req,res)=>{
     try{
-
+        
         const data=new Application({
-            ...req.body
+            ...req.body,
         });
         await data.save();
         res.status(200).send({message:"Saved Successfully"})
