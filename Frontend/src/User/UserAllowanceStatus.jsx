@@ -1,53 +1,38 @@
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './UserAllowanceStatus.css';
 import { FaArrowLeft } from "react-icons/fa";
-
-
-const data = [
-    {
-      Employee_ID: "E001",
-      Employee_Name: "John Doe",
-      Allowance_No: "001",
-      Allowance_Type: "Travel",
-      Apply_Date: "2024-07-10",
-      Amount: 150,
-      Description: "Business trip to NYC",
-      Status: "Approved"
-    },
-    {
-      Employee_ID: "E002",
-      Employee_Name: "Jane Smith",
-      Allowance_No: "002",
-      Allowance_Type: "Food",
-      Apply_Date: "2024-07-11",
-      Amount: 50,
-      Description: "Client meeting lunch",
-      Status: "Pending"
-    },
-    {
-      Employee_ID: "E003",
-      Employee_Name: "Sam Brown",
-      Allowance_No: "003",
-      Allowance_Type: "Accommodation",
-      Apply_Date: "2024-07-12",
-      Amount: 300,
-      Description: "Hotel stay for conference",
-      Status: "Rejected"
-    }
-  ];
-
+import { useSelector } from "react-redux";
+import { selectUser } from "../Feature/Userslice";
+import axios from "axios";
 
 
 const UserAllowanceSataus = () => {
     const [toggle, setToggle] = useState(0);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [data, setData] = useState([]);
+    const user = useSelector(selectUser);
+
+  useEffect(() => {
+    const fetchAllowances = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/application/userApplications/${user.docId}`);
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching employee allowances: ', error);
+      }
+    };
+
+    fetchAllowances();
+  }, [user]);
+
+    
 
     const handleUpdatePlan = (employee) => {
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
-
+    
     return (
         <>
             <main className="UserAllowance">
@@ -61,7 +46,7 @@ const UserAllowanceSataus = () => {
                                     <thead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 1 }}>
                                         <tr>
                                             <th scope="col">Sl no.</th>
-                                            <th scope="col">Allowance Number</th>
+                                            <th scope="col">Allowance ID</th>
                                             <th scope="col">Allowance Type</th>
                                             <th scope="col">Apply Date</th>
                                             <th scope="col">Status</th>
@@ -69,13 +54,13 @@ const UserAllowanceSataus = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, index) => (
+                                        { data && data.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
-                                                <td>{item.Allowance_No}</td>
-                                                <td>{item.Allowance_Type}</td>
-                                                <td>{item.Apply_Date}</td>
-                                                <td>{item.Status}</td>
+                                                <td>{item._id}</td>
+                                                <td>{item.selectedAllowanceTypes[0].type}</td>
+                                                <td>{item.date}</td>
+                                                <td>{item.status}</td>
                                                 <td>
                                                     <button
                                                         className="btn btn-warning"
@@ -107,35 +92,36 @@ const UserAllowanceSataus = () => {
                                     <tbody>
                                         <tr>
                                             <th>Employee ID</th>
-                                            <td>{selectedEmployee.Employee_ID}</td>
+                                            <td>{selectedEmployee.employeeId}</td>
                                         </tr>
                                         <tr>
                                             <th>Employee Name</th>
-                                            <td>{selectedEmployee.Employee_Name}</td>
+                                            <td>{selectedEmployee.employeeName}</td>
                                         </tr>
                                         <tr>
-                                            <th>Allwance Number</th>
-                                            <td>{selectedEmployee.Allowance_No}</td>
+                                            <th>Allowance ID</th>
+                                            <td>{selectedEmployee._id}</td>
                                         </tr>
                                         <tr>
                                             <th>Allowance Type</th>
-                                            <td>{selectedEmployee.Allowance_Type}</td>
+                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].type} ${selectedEmployee.selectedAllowanceTypes[1]?.type} ${selectedEmployee.selectedAllowanceTypes[3]?.type}`}</td>
                                         </tr>
                                         <tr>
                                             <th>Apply Date</th>
-                                            <td>{selectedEmployee.Apply_Date}</td>
+                                            <td>{selectedEmployee.date}</td>
                                         </tr>
                                         <tr>
                                             <th>Amount</th>
-                                            <td>{selectedEmployee.Amount}</td>
+                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].amount} ${selectedEmployee.selectedAllowanceTypes[1]?.amount}`}</td>
                                         </tr>
                                         <tr>
                                             <th>Description</th>
-                                            <td>{selectedEmployee.Description}</td>
+                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].description}, ${selectedEmployee.selectedAllowanceTypes[1]?.description}`}</td>
                                         </tr>
+                                        
                                         <tr>
                                             <th>Status</th>
-                                            <td>{selectedEmployee.Status}</td>
+                                            <td>{selectedEmployee.status}</td>
                                         </tr>
                                     </tbody>
                                 </table>

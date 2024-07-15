@@ -98,32 +98,26 @@ const Registration = () => {
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange1 = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData1({
-      ...formData1,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-    setFormData2({
       ...formData2,
-      [name]: type === 'checkbox' ? checked : value,
-    });
-    setFormData3({
-      ...formData3,
       [name]: type === 'checkbox' ? checked : value,
     });
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData1({
-      ...formData1,
-      [name]: files[0],
-    });
+  const handleChange2 = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData2({
       ...formData2,
-      [name]: files[0],
+      [name]: type === 'checkbox' ? checked : value,
     });
+  };
+
+ 
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
     setFormData3({
       ...formData3,
       [name]: files[0],
@@ -381,349 +375,349 @@ const Registration = () => {
                   {/* Create Account Button */}
                   <button type='submit' className='btn btn-primary' onClick={handleRegistor}>Create Account</button>
 
-                  {/* Additional Login Option */}
-
-                  <div className='register-link'>
-                    <p>
-                      If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(0)}>Login</a>
-                    </p>
-                  </div>
-                </form>
-              </div>
+                {/* Additional Login Option */}
+                
+                <div className='register-link'>
+                  <p>
+                  If you already have an account <a className="btn btn-outline-danger" onClick={() => settoggle(0)}>Login</a>
+                  </p>
+                </div>
+              </form>
             </div>
+          </div>
 
-          </>
-        )}
-        {toggle === 2 && (
-          <>
-            <div className="container-fluid" id="grad1">
-              <button type="button" class="btn btn-outline-dark top-right-button"
-                onClick={() => settoggle(0)}>Login</button>
-              <div className="row justify-content-center mt-0">
-                <div className="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
-                  <div className="card px-0 pt-3 pb-0 mt-3 mb-3">
-                    <h2>
-                      <strong>Sign Up Your User Account</strong>
-                    </h2>
-                    {/* <p>Fill all form fields to go to the next step</p> */}
-                    <div className="row">
-                      <div className="col-md-12 mx-0">
-                        <form id="msform">
-                          <ul id="progressbar">
-                            <li className={step >= 0 ? "active" : ""} id="account">
-                              <strong>Personal Details</strong>
-                            </li>
-                            <li className={step >= 1 ? "active" : ""} id="personal">
-                              <strong>Communication Details</strong>
-                            </li>
-                            <li className={step >= 2 ? "active" : ""} id="payment">
-                              <strong>Other Details</strong>
-                            </li>
-                            <li className={step >= 3 ? "active" : ""} id="confirm">
-                              <strong>Review</strong>
-                            </li>
-                          </ul>
+        </>
+      )}
+      {toggle === 2 && (
+        <>
+          <div className="container-fluid" id="grad1">
+            <button type="button" class="btn btn-outline-dark top-right-button"
+              onClick={() => settoggle(0)}>Login</button>
+            <div className="row justify-content-center mt-0">
+              <div className="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+                <div className="card px-0 pt-3 pb-0 mt-3 mb-3">
+                  <h2>
+                    <strong>Sign Up Your User Account</strong>
+                  </h2>
+                  {/* <p>Fill all form fields to go to the next step</p> */}
+                  <div className="row">
+                    <div className="col-md-12 mx-0">
+                      <form id="msform">
+                        <ul id="progressbar">
+                          <li className={step >= 0 ? "active" : ""} id="account">
+                            <strong>Personal Details</strong>
+                          </li>
+                          <li className={step >= 1 ? "active" : ""} id="personal">
+                            <strong>Communication Details</strong>
+                          </li>
+                          <li className={step >= 2 ? "active" : ""} id="payment">
+                            <strong>Other Details</strong>
+                          </li>
+                          <li className={step >= 3 ? "active" : ""} id="confirm">
+                            <strong>Review</strong>
+                          </li>
+                        </ul>
 
-                          <fieldset style={{ display: step === 0 ? "block" : "none" }}>
-                            <h2 className="fs-title">Personal Details</h2>
-                            <div className="form-card">
-                              <div className="left-container">
-                                <div className="field-container">
-                                  <label className="field-label">Employee ID</label>
-                                  <input
-                                    type="text"
-                                    name="employeeId"
-                                    placeholder="Employee ID"
-                                    value={employeeId}
-                                    onChange={(e) => setEmployeeId(e.target.value)}
-                                  />
-                                  {errors.employeeId && <span className="error">{errors.employeeId}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">First Name</label>
-                                  <input
-                                    type="text"
-                                    name="firstName"
-                                    placeholder="First Name"
-                                    value={formData1.firstName}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.firstName && <span className="error">{errors.firstName}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Middle Name</label>
-                                  <input
-                                    type="text"
-                                    name="middleName"
-                                    placeholder="Middle Name"
-                                    value={formData1.middleName}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.middleName && <span className="error">{errors.middleName}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Last Name</label>
-                                  <input
-                                    type="text"
-                                    name="lastName"
-                                    placeholder="Last Name"
-                                    value={formData1.lastName}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.lastName && <span className="error">{errors.lastName}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Gender</label>
-                                  <select
-                                    name="gender"
-                                    value={formData1.gender}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                  </select>
-                                  {errors.gender && <span className="error">{errors.gender}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Email</label>
-                                  <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email"
-                                    value={formData1.email}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.email && <span className="error">{errors.email}</span>}
-                                </div>
+                        <fieldset style={{ display: step === 0 ? "block" : "none" }}>
+                          <h2 className="fs-title">Personal Details</h2>
+                          <div className="form-card">
+                            <div className="left-container">
+                              <div className="field-container">
+                                <label className="field-label">Employee ID</label>
+                                <input
+                                  type="text"
+                                  name="employeeId"
+                                  placeholder="Employee ID"
+                                  value={employeeId}
+                                  onChange={(e) => setEmployeeId(e.target.value)}
+                                />
+                                {errors.employeeId && <span className="error">{errors.employeeId}</span>}
                               </div>
-                              <div className="right-container">
-                                <div className="field-container">
-                                  <label className="field-label">Relation Type</label>
-                                  <select
-                                    name="relationType"
-                                    value={formData1.relationType}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select Relation</option>
-                                    <option value="Father">Father</option>
-                                    <option value="Mother">Mother</option>
-                                    <option value="Guardian">Guardian</option>
-                                  </select>
-                                  {errors.relationType && <span className="error">{errors.relationType}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Relation Name</label>
-                                  <input
-                                    type="text"
-                                    name="relationName"
-                                    placeholder="Relation Name"
-                                    value={formData1.relationName}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.relationName && <span className="error">{errors.relationName}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Date of Birth</label>
-                                  <input
-                                    type="date"
-                                    name="dob"
-                                    value={formData1.dob}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.dob && <span className="error">{errors.dob}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Marital Status</label>
-                                  <select
-                                    name="maritalStatus"
-                                    value={formData1.maritalStatus}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select Status</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Unmarried">Unmarried</option>
-                                  </select>
-                                  {errors.maritalStatus && <span className="error">{errors.maritalStatus}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Photograph</label>
-                                  <input
-                                    type="file"
-                                    name="photograph"
-                                    value={formData1.photograph}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.photograph && <span className="error">{errors.photograph}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Signature</label>
-                                  <input
-                                    type="file"
-                                    name="signature"
-                                    value={formData1.signature}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.signature && <span className="error">{errors.signature}</span>}
-                                </div>
+                              <div className="field-container">
+                                <label className="field-label">First Name</label>
+                                <input
+                                  type="text"
+                                  name="firstName"
+                                  placeholder="First Name"
+                                  value={formData1.firstName}
+                                  onChange={handleChange1}
+                                />
+                                {errors.firstName && <span className="error">{errors.firstName}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Middle Name</label>
+                                <input
+                                  type="text"
+                                  name="middleName"
+                                  placeholder="Middle Name"
+                                  value={formData1.middleName}
+                                  onChange={handleChange1}
+                                />
+                                {errors.middleName && <span className="error">{errors.middleName}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Last Name</label>
+                                <input
+                                  type="text"
+                                  name="lastName"
+                                  placeholder="Last Name"
+                                  value={formData1.lastName}
+                                  onChange={handleChange1}
+                                />
+                                {errors.lastName && <span className="error">{errors.lastName}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Gender</label>
+                                <select
+                                  name="gender"
+                                  value={formData1.gender}
+                                  onChange={handleChange1}
+                                >
+                                  <option value="">Select Gender</option>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                                  <option value="Other">Other</option>
+                                </select>
+                                {errors.gender && <span className="error">{errors.gender}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Email</label>
+                                <input
+                                  type="email"
+                                  name="email"
+                                  placeholder="Email"
+                                  value={formData1.email}
+                                  onChange={handleChange1}
+                                />
+                                {errors.email && <span className="error">{errors.email}</span>}
                               </div>
                             </div>
-                            <input
-                              type="button"
-                              name="next"
-                              className="next action-button"
-                              value="Next"
-                              onClick={handleNext1}
-                            />
-                          </fieldset>
-
-                          <fieldset style={{ display: step === 1 ? "block" : "none" }}>
-                            <h2 className="fs-title">Communication Details</h2>
-                            <div className="form-card">
-                              <div className="left-container">
-                                <div className="field-container">
-                                  <label className="field-label">Present House No./Street Name</label>
-                                  <input
-                                    type="text"
-                                    name="presentHouseNo"
-                                    placeholder="House No."
-                                    value={formData2.presentHouseNo}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.presentHouseNo && <span className="error">{errors.presentHouseNo}</span>}
-                                </div>
-
-                                <div className="field-container">
-                                  <label className="field-label">Present City</label>
-                                  <input
-                                    type="text"
-                                    name="presentLocality"
-                                    placeholder="City"
-                                    value={formData2.presentLocality}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.presentLocality && <span className="error">{errors.presentLocality}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Present Country</label>
-                                  <select
-                                    name="presentCountry"
-                                    value={formData2.presentCountry}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select Country</option>
-                                    <option value="India">India</option>
-                                  </select>
-                                  {errors.presentCountry && <span className="error">{errors.presentCountry}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Present State</label>
-                                  <select
-                                    name="presentState"
-                                    value={formData2.presentState}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select State</option>
-                                    <option value="Odisha">Odisha</option>
-                                  </select>
-                                  {errors.presentState && <span className="error">{errors.presentState}</span>}
-                                </div>
-
-                                <div className="field-container">
-                                  <label className="field-label">Present District</label>
-                                  <select
-                                    name="presentDistrict"
-                                    value={formData2.presentDistrict}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select District</option>
-                                    <option value="Sambalpur">Sambalpur</option>
-                                  </select>
-                                  {errors.presentDistrict && <span className="error">{errors.presentDistrict}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Present Pincode</label>
-                                  <input
-                                    type="text"
-                                    name="presentPincode"
-                                    placeholder="Pincode"
-                                    value={formData2.presentPincode}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.presentPincode && <span className="error">{errors.presentPincode}</span>}
-                                </div>
+                            <div className="right-container">
+                              <div className="field-container">
+                                <label className="field-label">Relation Type</label>
+                                <select
+                                  name="relationType"
+                                  value={formData1.relationType}
+                                  onChange={handleChange1}
+                                >
+                                  <option value="">Select Relation</option>
+                                  <option value="Father">Father</option>
+                                  <option value="Mother">Mother</option>
+                                  <option value="Guardian">Guardian</option>
+                                </select>
+                                {errors.relationType && <span className="error">{errors.relationType}</span>}
                               </div>
-                              <div className="right-container">
-                                <div className="field-container">
-                                  <label className="field-label">Permanent House No./Street Name</label>
-                                  <input
-                                    type="text"
-                                    name="permanentHouseNo"
-                                    placeholder="House No."
-                                    value={formData2.permanentHouseNo}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.permanentHouseNo && <span className="error">{errors.permanentHouseNo}</span>}
-                                </div>
+                              <div className="field-container">
+                                <label className="field-label">Relation Name</label>
+                                <input
+                                  type="text"
+                                  name="relationName"
+                                  placeholder="Relation Name"
+                                  value={formData1.relationName}
+                                  onChange={handleChange1}
+                                />
+                                {errors.relationName && <span className="error">{errors.relationName}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Date of Birth</label>
+                                <input
+                                  type="date"
+                                  name="dob"
+                                  value={formData1.dob}
+                                  onChange={handleChange1}
+                                />
+                                {errors.dob && <span className="error">{errors.dob}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Marital Status</label>
+                                <select
+                                  name="maritalStatus"
+                                  value={formData1.maritalStatus}
+                                  onChange={handleChange1}
+                                >
+                                  <option value="">Select Status</option>
+                                  <option value="Married">Married</option>
+                                  <option value="Unmarried">Unmarried</option>
+                                </select>
+                                {errors.maritalStatus && <span className="error">{errors.maritalStatus}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Photograph</label>
+                                <input
+                                  type="file"
+                                  name="photograph"
+                                  value={formData1.photograph}
+                                  onChange={handleChange1}
+                                />
+                                {errors.photograph && <span className="error">{errors.photograph}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Signature</label>
+                                <input
+                                  type="file"
+                                  name="signature"
+                                  value={formData1.signature}
+                                  onChange={handleChange1}
+                                />
+                                {errors.signature && <span className="error">{errors.signature}</span>}
+                              </div>
+                            </div>
+                          </div>
+                          <input
+                            type="button"
+                            name="next"
+                            className="next action-button"
+                            value="Next"
+                            onClick={handleNext1}
+                          />
+                        </fieldset>
 
-                                <div className="field-container">
-                                  <label className="field-label">Permanent City</label>
-                                  <input
-                                    type="text"
-                                    name="permanentLocality"
-                                    placeholder="City"
-                                    value={formData2.permanentLocality}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.permanentLocality && <span className="error">{errors.permanentLocality}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Permanent Country</label>
-                                  <select
-                                    name="permanentCountry"
-                                    value={formData2.permanentCountry}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select Country</option>
-                                    <option value="India">India</option>
-                                  </select>
-                                  {errors.permanentCountry && <span className="error">{errors.permanentCountry}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Permanent State</label>
-                                  <select
-                                    name="permanentState"
-                                    value={formData2.permanentState}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select State</option>
-                                    <option value="Odisha">Odisha</option>
-                                  </select>
-                                  {errors.permanentState && <span className="error">{errors.permanentState}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Permanent District</label>
-                                  <select
-                                    name="permanentDistrict"
-                                    value={formData2.permanentDistrict}
-                                    onChange={handleChange}
-                                  >
-                                    <option value="">Select District</option>
-                                    <option value="Sambalpur">Sambalpur</option>
-                                  </select>
-                                  {errors.permanentDistrict && <span className="error">{errors.permanentDistrict}</span>}
-                                </div>
-                                <div className="field-container">
-                                  <label className="field-label">Permanent Pincode</label>
-                                  <input
-                                    type="text"
-                                    name="permanentPincode"
-                                    placeholder="Pincode"
-                                    value={formData2.permanentPincode}
-                                    onChange={handleChange}
-                                  />
-                                  {errors.permanentPincode && <span className="error">{errors.permanentPincode}</span>}
+                        <fieldset style={{ display: step === 1 ? "block" : "none" }}>
+                          <h2 className="fs-title">Communication Details</h2>
+                          <div className="form-card">
+                            <div className="left-container">
+                              <div className="field-container">
+                                <label className="field-label">Present House No./Street Name</label>
+                                <input
+                                  type="text"
+                                  name="presentHouseNo"
+                                  placeholder="House No."
+                                  value={formData2.presentHouseNo}
+                                  onChange={handleChange2}
+                                />
+                                {errors.presentHouseNo && <span className="error">{errors.presentHouseNo}</span>}
+                              </div>
+
+                              <div className="field-container">
+                                <label className="field-label">Present City</label>
+                                <input
+                                  type="text"
+                                  name="presentLocality"
+                                  placeholder="City"
+                                  value={formData2.presentLocality}
+                                  onChange={handleChange2}
+                                />
+                                {errors.presentLocality && <span className="error">{errors.presentLocality}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Present Country</label>
+                                <select
+                                  name="presentCountry"
+                                  value={formData2.presentCountry}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select Country</option>
+                                  <option value="India">India</option>
+                                </select>
+                                {errors.presentCountry && <span className="error">{errors.presentCountry}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Present State</label>
+                                <select
+                                  name="presentState"
+                                  value={formData2.presentState}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select State</option>
+                                  <option value="Odisha">Odisha</option>
+                                </select>
+                                {errors.presentState && <span className="error">{errors.presentState}</span>}
+                              </div>
+
+                              <div className="field-container">
+                                <label className="field-label">Present District</label>
+                                <select
+                                  name="presentDistrict"
+                                  value={formData2.presentDistrict}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select District</option>
+                                  <option value="Sambalpur">Sambalpur</option>
+                                </select>
+                                {errors.presentDistrict && <span className="error">{errors.presentDistrict}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Present Pincode</label>
+                                <input
+                                  type="text"
+                                  name="presentPincode"
+                                  placeholder="Pincode"
+                                  value={formData2.presentPincode}
+                                  onChange={handleChange2}
+                                />
+                                {errors.presentPincode && <span className="error">{errors.presentPincode}</span>}
+                              </div>
+                            </div>
+                            <div className="right-container">
+                              <div className="field-container">
+                                <label className="field-label">Permanent House No./Street Name</label>
+                                <input
+                                  type="text"
+                                  name="permanentHouseNo"
+                                  placeholder="House No."
+                                  value={formData2.permanentHouseNo}
+                                  onChange={handleChange2}
+                                />
+                                {errors.permanentHouseNo && <span className="error">{errors.permanentHouseNo}</span>}
+                              </div>
+
+                              <div className="field-container">
+                                <label className="field-label">Permanent City</label>
+                                <input
+                                  type="text"
+                                  name="permanentLocality"
+                                  placeholder="City"
+                                  value={formData2.permanentLocality}
+                                  onChange={handleChange2}
+                                />
+                                {errors.permanentLocality && <span className="error">{errors.permanentLocality}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Permanent Country</label>
+                                <select
+                                  name="permanentCountry"
+                                  value={formData2.permanentCountry}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select Country</option>
+                                  <option value="India">India</option>
+                                </select>
+                                {errors.permanentCountry && <span className="error">{errors.permanentCountry}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Permanent State</label>
+                                <select
+                                  name="permanentState"
+                                  value={formData2.permanentState}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select State</option>
+                                  <option value="Odisha">Odisha</option>
+                                </select>
+                                {errors.permanentState && <span className="error">{errors.permanentState}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Permanent District</label>
+                                <select
+                                  name="permanentDistrict"
+                                  value={formData2.permanentDistrict}
+                                  onChange={handleChange2}
+                                >
+                                  <option value="">Select District</option>
+                                  <option value="Sambalpur">Sambalpur</option>
+                                </select>
+                                {errors.permanentDistrict && <span className="error">{errors.permanentDistrict}</span>}
+                              </div>
+                              <div className="field-container">
+                                <label className="field-label">Permanent Pincode</label>
+                                <input
+                                  type="text"
+                                  name="permanentPincode"
+                                  placeholder="Pincode"
+                                  value={formData2.permanentPincode}
+                                  onChange={handleChange2}
+                                />
+                                {errors.permanentPincode && <span className="error">{errors.permanentPincode}</span>}
                                 </div>
                               </div>
                             </div>

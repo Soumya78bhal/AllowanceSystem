@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Employee = require('./Employee')
 
 const applicationSchema = new mongoose.Schema({
     employee: {
@@ -46,9 +45,12 @@ const applicationSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  files: [{
+  remark:{
+    type:String
+  },
+  file: {
     type: String // Assuming you store file paths or URLs
-  }]
+  }
 });
 
 const Application = mongoose.model("Application", applicationSchema);
