@@ -32,7 +32,7 @@ const UserAllowanceSataus = () => {
         setSelectedEmployee(employee);
         setToggle(1); // Switch to update mode
     };
-
+    
     return (
         <>
             <main className="UserAllowance">
@@ -54,7 +54,7 @@ const UserAllowanceSataus = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {data.map((item, index) => (
+                                        { data && data.map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index + 1}</th>
                                                 <td>{item._id}</td>
@@ -112,12 +112,13 @@ const UserAllowanceSataus = () => {
                                         </tr>
                                         <tr>
                                             <th>Amount</th>
-                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].amount} ${selectedEmployee.selectedAllowanceTypes[1]?.amount} ${selectedEmployee.selectedAllowanceTypes[3]?.amount}`}</td>
+                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].amount} ${selectedEmployee.selectedAllowanceTypes[1]?.amount}`}</td>
                                         </tr>
                                         <tr>
                                             <th>Description</th>
-                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].description}, ${selectedEmployee.selectedAllowanceTypes[1]?.description}, ${selectedEmployee.selectedAllowanceTypes[3]?.description}`}</td>
+                                            <td>{`${selectedEmployee.selectedAllowanceTypes[0].description}, ${selectedEmployee.selectedAllowanceTypes[1]?.description}`}</td>
                                         </tr>
+                                        
                                         <tr>
                                             <th>Status</th>
                                             <td>{selectedEmployee.status}</td>
