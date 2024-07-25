@@ -115,6 +115,10 @@ const DashBoad = () => {
                                                     <th>Amount</th>
                                                     <td>{item.amount}</td>
                                                 </tr>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <td>{item.description}</td>
+                                                </tr>
                                             </React.Fragment>
                                         ))}
                                         <tr>
