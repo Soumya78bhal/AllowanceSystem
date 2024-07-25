@@ -100,7 +100,7 @@ const CreateUser = () => {
     formDataToSend.append('isVerified', true);
 
     try {
-        const response = await axios.post('http://localhost:5000/api/auth/register', formDataToSend, {
+        const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/auth/register', formDataToSend, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

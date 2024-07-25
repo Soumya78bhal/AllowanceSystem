@@ -5,7 +5,7 @@ import "./DashBoad.css";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from 'axios';
 
-const url="http://localhost:5000/api/application/applications";
+const url="https://allowance-system-dfe7.onrender.com/api/application/applications";
 const DashBoad = () => {
     const [data1, setData] = useState([]);
     const [toggle, setToggle] = useState(0);
@@ -29,7 +29,7 @@ const DashBoad = () => {
 
     // Update the status of applications
     const handleAction = (action) => {
-        axios.post('http://localhost:5000/api/application/updateApplication', {
+        axios.post('https://allowance-system-dfe7.onrender.com/api/application/updateApplication', {
             _id: selectedEmployee._id,
             status: action,
             remark: remark
@@ -124,7 +124,7 @@ const DashBoad = () => {
                                         <tr>
                                             <th>Document</th>
                                             <td>
-                                                <a href={`http://localhost:5000/api/application/download/${encodeURIComponent(selectedEmployee.file.split("\\").pop())}`} download>
+                                                <a href={`https://allowance-system-dfe7.onrender.com/api/application/download/${encodeURIComponent(selectedEmployee.file.split("\\").pop())}`} download>
                                                     View Document
                                                 </a>
                                             </td>

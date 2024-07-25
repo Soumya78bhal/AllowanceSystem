@@ -11,7 +11,7 @@ const UserProfilePage = () => {
 
     const fetchDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/profile/fetchDetails/${user.docId}`);
+            const response = await axios.get(`https://allowance-system-dfe7.onrender.com/api/profile/fetchDetails/${user.docId}`);
             setDetails(response.data);
         } catch (err) {
             console.error('Error fetching employee details:', err);
@@ -41,8 +41,8 @@ const UserProfilePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response1 = await axios.post(`http://localhost:5000/api/profile/personalDetails`, details.personalDetails);
-            const response2 = await axios.post(`http://localhost:5000/api/profile/communicationDetails`, details.communicationDetails);
+            const response1 = await axios.post(`https://allowance-system-dfe7.onrender.com/api/profile/personalDetails`, details.personalDetails);
+            const response2 = await axios.post(`https://allowance-system-dfe7.onrender.com/api/profile/communicationDetails`, details.communicationDetails);
 
             console.log(response1.data);
             console.log(response2.data);

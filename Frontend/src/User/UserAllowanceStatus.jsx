@@ -16,7 +16,7 @@ const UserAllowanceSataus = () => {
   useEffect(() => {
     const fetchAllowances = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/application/userApplications/${user.docId}`);
+        const response = await axios.get(`https://allowance-system-dfe7.onrender.com/api/application/userApplications/${user.docId}`);
         setData(response.data);
       } catch (error) {
         console.error('Error fetching employee allowances: ', error);

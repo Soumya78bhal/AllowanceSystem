@@ -38,7 +38,7 @@ const Registration = () => {
     } else {
       setErrorMessage('');
       try {
-        const response = await axios.post('http://localhost:5000/api/auth/register', { username, employeeId, password: newPassword });
+        const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/auth/register', { username, employeeId, password: newPassword });
         console.log(response.data);
         if (response.data.errors) {
           setErrors1(response.data.errors);
@@ -152,7 +152,7 @@ const Registration = () => {
     if (validateForm()) {
       try {
         console.log(`formData.empId: ${formData1.empId}`);
-        const response = await axios.post('http://localhost:5000/api/empDetails/personalDetails', formData1);
+        const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/empDetails/personalDetails', formData1);
         console.log(response.data);
         if (response.data.errors) {
           setErrors1(response.data.errors);
@@ -169,7 +169,7 @@ const Registration = () => {
   const handleNext2 = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:5000/api/empDetails/communicationDetails', formData2);
+        const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/empDetails/communicationDetails', formData2);
         console.log(response.data);
         if (response.data.errors) {
           setErrors1(response.data.errors);
@@ -186,7 +186,7 @@ const Registration = () => {
   const handleNext3 = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:5000/api/empDetails/otherDetails', formData3);
+        const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/empDetails/otherDetails', formData3);
         console.log(response.data);
         if (response.data.errors) {
           setErrors1(response.data.errors);
@@ -227,7 +227,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { loginRole, username: lusername, password: lpassword });
+      const response = await axios.post('https://allowance-system-dfe7.onrender.com/api/auth/login', { loginRole, username: lusername, password: lpassword });
       console.log(response.data);
       if (response.data.errors) {
         setErrors1(response.data.errors);

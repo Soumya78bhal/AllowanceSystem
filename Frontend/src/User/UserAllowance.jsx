@@ -88,7 +88,7 @@ const UserAllowance = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const url = "http://localhost:5000/api/application/postApplication";
+    const url = "https://allowance-system-dfe7.onrender.com/api/application/postApplication";
 
     const formDataToSend = new FormData();
     formDataToSend.append("file", formData.file);
